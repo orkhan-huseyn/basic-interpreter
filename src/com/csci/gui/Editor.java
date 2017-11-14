@@ -3,6 +3,8 @@ package com.csci.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -52,6 +54,20 @@ public class Editor {
 
         JToolBar toolBar = new JToolBar();
         frame.getContentPane().add(toolBar, BorderLayout.NORTH);
+
+        JButton btnLex = new JButton("Lex");
+
+        btnLex.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+        toolBar.add(btnLex);
+
+        JButton btnParse = new JButton("Parse");
+        toolBar.add(btnParse);
 
         JButton btnRun = new JButton("Execute");
         toolBar.add(btnRun);
