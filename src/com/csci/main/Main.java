@@ -2,7 +2,7 @@ package com.csci.main;
 
 import com.csci.gui.Editor;
 
-import java.awt.*;
+import java.awt.EventQueue;
 
 public class Main {
 
