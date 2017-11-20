@@ -1,6 +1,6 @@
 package com.csci.components.stms;
 
-import com.csci.components.Id;
+import com.csci.components.exps.primitive.Id;
 import com.csci.components.Type;
 
 public class SDecl extends Stm {
@@ -19,5 +19,10 @@ public class SDecl extends Stm {
 
     public Id getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("[ declaration: %s %s; ]", this.getType().getValue(), this.getId().getValue());
     }
 }

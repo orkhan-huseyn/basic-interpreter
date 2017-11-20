@@ -15,6 +15,6 @@ public class SExp extends Stm {
     }
 
     public String toString() {
-        return String.format("statement: %s", this.getExp().toString());
+        return String.format("[ statement: %s; ]", this.getExp().toString());
     }
 }

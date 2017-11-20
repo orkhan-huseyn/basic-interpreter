@@ -20,4 +20,9 @@ public class ESub extends Exp {
         return exp2;
     }
 
+    @Override
+    public String toString() {
+        return String.format("[ subtraction: %s - %s ]", this.getExp1().toString(), this.getExp2().toString());
+    }
+
 }

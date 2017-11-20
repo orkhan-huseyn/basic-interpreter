@@ -13,4 +13,9 @@ public class SReturn extends Stm {
     public Exp getExp() {
         return exp;
     }
+
+    @Override
+    public String toString() {
+        return String.format("[ return %s ]", this.getExp().toString());
+    }
 }

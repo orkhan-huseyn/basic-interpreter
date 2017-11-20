@@ -13,4 +13,9 @@ public class EInt extends Exp {
     public int getValue() {
         return value;
     }
+
+    @Override
+    public String toString() {
+        return String.format("[ integer: %d ]", this.getValue());
+    }
 }

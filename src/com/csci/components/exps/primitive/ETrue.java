@@ -13,4 +13,9 @@ public class ETrue extends Exp {
     public boolean getBooleanTrue() {
         return booleanTrue;
     }
+
+    @Override
+    public String toString() {
+        return String.format("[ boolean: %b ]", this.getBooleanTrue());
+    }
 }

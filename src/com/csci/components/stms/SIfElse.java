@@ -26,4 +26,9 @@ public class SIfElse extends Stm {
     public Rest getRest() {
         return rest;
     }
+
+    @Override
+    public String toString() {
+        return String.format("[ if_else_statement: if (%s) %s %s ]", this.getExp().toString(), this.getStm().toString(), this.getRest().toString());
+    }
 }

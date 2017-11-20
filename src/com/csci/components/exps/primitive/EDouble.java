@@ -13,4 +13,9 @@ public class EDouble extends Exp {
     public double getValue() {
         return value;
     }
+
+    @Override
+    public String toString() {
+        return String.format("[ double: %f ]", this.getValue());
+    }
 }

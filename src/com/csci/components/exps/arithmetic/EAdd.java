@@ -19,4 +19,9 @@ public class EAdd extends Exp {
     public Exp getExp2() {
         return exp2;
     }
+
+    @Override
+    public String toString() {
+        return String.format("[ addition: %s + %s ]", this.getExp1().toString(), this.getExp2().toString());
+    }
 }

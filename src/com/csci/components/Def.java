@@ -1,5 +1,6 @@
 package com.csci.components;
 
+import com.csci.components.exps.primitive.Id;
 import com.csci.components.stms.Stm;
 
 public class Def {
@@ -33,7 +34,7 @@ public class Def {
     }
 
     public String toString() {
-        return String.format("function: %s", this.getId().getValue());
+        return String.format("[ definition: %s ]", this.getId().getValue());
     }
 
 }

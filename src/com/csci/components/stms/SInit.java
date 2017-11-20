@@ -1,7 +1,7 @@
 package com.csci.components.stms;
 
 import com.csci.components.Type;
-import com.csci.components.Id;
+import com.csci.components.exps.primitive.Id;
 import com.csci.components.exps.Exp;
 
 public class SInit extends Stm {
@@ -26,5 +26,10 @@ public class SInit extends Stm {
 
     public Exp getExp() {
         return exp;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("[ initialization: %s %s = %s; ]", this.getType().getValue(), this.getId().getValue(), this.getExp().toString());
     }
 }

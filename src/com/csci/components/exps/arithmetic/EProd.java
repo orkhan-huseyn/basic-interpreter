@@ -20,4 +20,9 @@ public class EProd extends Exp {
         return exp2;
     }
 
+    @Override
+    public String toString() {
+        return String.format("[ multiplication: %s * %s ]", this.getExp1().toString(), this.getExp2().toString());
+    }
+
 }

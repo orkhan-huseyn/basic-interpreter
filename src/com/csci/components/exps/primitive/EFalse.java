@@ -11,4 +11,9 @@ public class EFalse {
     public boolean getBooleanFalse() {
         return booleanFalse;
     }
+
+    @Override
+    public String toString() {
+        return String.format("[ boolean: %b ]", this.getBooleanFalse());
+    }
 }

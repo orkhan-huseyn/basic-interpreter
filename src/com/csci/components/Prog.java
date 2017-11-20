@@ -13,6 +13,6 @@ public class Prog {
     }
 
     public String toString() {
-        return "program";
+        return "[ program ]";
     }
 }

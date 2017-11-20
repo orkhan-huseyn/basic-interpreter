@@ -19,4 +19,9 @@ public class SWhile extends  Stm {
     public Exp getExp() {
         return exp;
     }
+
+    @Override
+    public String toString() {
+        return String.format("[ while (%s) %s ]", this.getExp().toString(), this.getStm().toString());
+    }
 }

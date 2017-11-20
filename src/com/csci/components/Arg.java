@@ -1,5 +1,7 @@
 package com.csci.components;
 
+import com.csci.components.exps.primitive.Id;
+
 public class Arg {
 
     private Type type;
@@ -16,5 +18,10 @@ public class Arg {
 
     public Id getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("[ arg: %s %s ]", this.getType().getValue(), this.getId().getValue());
     }
 }

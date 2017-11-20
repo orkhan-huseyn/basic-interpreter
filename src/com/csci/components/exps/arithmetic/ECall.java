@@ -1,6 +1,6 @@
 package com.csci.components.exps.arithmetic;
 
-import com.csci.components.Id;
+import com.csci.components.exps.primitive.Id;
 import com.csci.components.exps.Exp;
 
 public class ECall extends Exp {
@@ -19,5 +19,10 @@ public class ECall extends Exp {
 
     public Exp[] getExps() {
         return exps;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("[ function_call: %s() ]", this.getId().toString());
     }
 }
