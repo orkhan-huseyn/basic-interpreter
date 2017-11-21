@@ -23,6 +23,6 @@ public class SDecl extends Stm {
 
     @Override
     public String toString() {
-        return String.format("[ declaration: %s %s; ]", this.getType().getValue(), this.getId().getValue());
+        return String.format("[ declaration: %s %s; ]", "", this.getId().getValue());
     }
 }

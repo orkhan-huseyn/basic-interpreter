@@ -22,7 +22,7 @@ public class ADecl extends Arg {
 
     @Override
     public String toString() {
-        return String.format("[ arg: %s %s ]", this.getType().getValue(), this.getId().getValue());
+        return String.format("[ arg: %s %s ]", "", this.getId().getValue());
     }
 
 }

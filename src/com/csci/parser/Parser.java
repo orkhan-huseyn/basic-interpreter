@@ -7,6 +7,7 @@ import com.csci.components.Type;
 import com.csci.components.exps.Exp;
 import com.csci.components.stms.Stm;
 import com.csci.lexer.Token;
+import com.csci.lexer.TokenType;
 
 import java.util.List;
 
@@ -22,29 +23,23 @@ public class Parser {
         this.next = tokens.get(index);
     }
 
-    public Stm parseStatement() {
+    public Stm parse() {
+
+        Token first  = next;
+        Token second = tokens.get(1);
+
+        if (first.getType().equals(TokenType.TYPEINT) && second.getType().equals(TokenType.IDENT)) {
+            parseDeclaration();
+        }
+
         return null;
     }
 
-    public Exp parseExpression() {
-        return null;
-    }
+    public Stm parseDeclaration() {
 
-    public Def parseDefinition() {
         return null;
-    }
 
-    public Prog parseProgram() {
-        return null;
-    }
-
-    public Arg parseArg() {
-        return null;
-    }
-
-    public Type parseType() {
-        return null;
-    }
+    };
 
     public void nextToken(Token expected) throws Exception {
         if (next.getData().equals(expected.getData())) {

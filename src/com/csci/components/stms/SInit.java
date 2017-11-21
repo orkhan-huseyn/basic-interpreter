@@ -30,6 +30,6 @@ public class SInit extends Stm {
 
     @Override
     public String toString() {
-        return String.format("[ initialization: %s %s = %s; ]", this.getType().getValue(), this.getId().getValue(), this.getExp().toString());
+        return String.format("[ initialization: %s %s = %s; ]", "", this.getId().getValue(), this.getExp().toString());
     }
 }
