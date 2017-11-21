@@ -1,10 +1,5 @@
 package com.csci.parser;
 
-import com.csci.components.Arg;
-import com.csci.components.Def;
-import com.csci.components.Prog;
-import com.csci.components.Type;
-import com.csci.components.exps.Exp;
 import com.csci.components.stms.Stm;
 import com.csci.lexer.Token;
 import com.csci.lexer.TokenType;
