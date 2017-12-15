@@ -1,8 +1,6 @@
 package com.csci.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -96,6 +94,7 @@ public class Editor {
             }
         });
         editorCode.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+        editorCode.setFont(new Font("Consolas", Font.PLAIN, 22));
         editorCode.setMinimumSize(new Dimension(0, 500));
         splitPane.setLeftComponent(editorCode);
 
