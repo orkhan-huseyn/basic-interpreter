@@ -1,3 +1,5 @@
 package com.csci.components.exps;
 
-public abstract class Exp { }
+import com.csci.components.Prog;
+
+public abstract class Exp extends Prog { }

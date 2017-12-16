@@ -15,4 +15,8 @@ public class TypeInt extends Type {
         return value;
     }
 
+    @Override
+    public String toString() {
+        return String.format("INT {value}", this.getValue());
+    }
 }

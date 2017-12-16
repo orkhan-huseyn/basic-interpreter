@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.HashMap;
 
 import javax.swing.JButton;
@@ -23,9 +25,11 @@ import javax.swing.text.StyleConstants;
 
 import javax.swing.border.EtchedBorder;
 
+import com.csci.components.Prog;
 import com.csci.lexer.Lexer;
 import com.csci.lexer.Token;
 import com.csci.lexer.TokenType;
+import com.csci.parser.Parser;
 
 public class Editor {
 
@@ -33,6 +37,7 @@ public class Editor {
     private JTextPane editorCode;
     private JTextPane editorConsole;
     private Lexer lexer;
+    private Parser parser;
 
     /**
      * Create the application.
@@ -40,6 +45,7 @@ public class Editor {
     public Editor() {
         initialize();
         lexer = new Lexer();
+        parser = new Parser();
     }
 
     /**
@@ -53,18 +59,23 @@ public class Editor {
         JToolBar toolBar = new JToolBar();
         frame.getContentPane().add(toolBar, BorderLayout.NORTH);
 
-        JButton btnLex = new JButton("Lex");
+        JButton btnParse = new JButton("Parse");
 
-        btnLex.addActionListener(new ActionListener() {
+        btnParse.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                String input = editorCode.getText().toString();
+
+                List<Token> tokenList = lexer.lex(input);
+
+                Prog prog = parser.parse((LinkedList<Token>) tokenList);
+
+                System.out.print(prog);
 
             }
         });
 
-        toolBar.add(btnLex);
-
-        JButton btnParse = new JButton("Parse");
         toolBar.add(btnParse);
 
         JButton btnRun = new JButton("Execute");

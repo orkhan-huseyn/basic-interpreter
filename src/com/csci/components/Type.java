@@ -1,3 +1,5 @@
 package com.csci.components;
 
-public abstract class Type { }
+import com.csci.components.exps.Exp;
+
+public abstract class Type extends Exp { }
