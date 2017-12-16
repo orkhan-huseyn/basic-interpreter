@@ -8,7 +8,7 @@ public class TypeInt extends Type {
     private String value;
 
     public TypeInt(String value) {
-        this.value = TokenType.TYPEINT.name();
+        this.value = value;
     }
 
     public String getValue() {
