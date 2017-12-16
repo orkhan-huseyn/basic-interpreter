@@ -4,18 +4,18 @@ import com.csci.components.exps.Exp;
 
 public class EInt extends Exp {
 
-    private int value;
+    private String value;
 
-    public EInt(int value) {
+    public EInt(String value) {
         this.value = value;
     }
 
-    public int getValue() {
+    public String getValue() {
         return value;
     }
 
     @Override
     public String toString() {
-        return String.format("[ integer: %d ]", this.getValue());
+        return String.format("[ integer: %s ]", this.getValue());
     }
 }

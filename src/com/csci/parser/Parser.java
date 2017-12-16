@@ -1,6 +1,7 @@
 package com.csci.parser;
 
 import com.csci.components.Prog;
+import com.csci.components.exps.primitive.EInt;
 import com.csci.components.types.TypeInt;
 import com.csci.lexer.Token;
 import com.csci.lexer.TokenType;
@@ -18,7 +19,7 @@ public class Parser {
         lookahead = this.tokens.getFirst();
 
         if (lookahead.getType() == TokenType.INT) {
-            return new TypeInt(lookahead.getData());
+            return new EInt(lookahead.getData());
         }
 
         return null;

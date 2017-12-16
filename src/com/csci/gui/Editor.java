@@ -3,9 +3,7 @@ package com.csci.gui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.HashMap;
 
 import javax.swing.JButton;
@@ -67,9 +65,9 @@ public class Editor {
 
                 String input = editorCode.getText().toString();
 
-                List<Token> tokenList = lexer.lex(input);
+                LinkedList<Token> tokenList = lexer.lex(input);
 
-                Prog prog = parser.parse((LinkedList<Token>) tokenList);
+                Prog prog = parser.parse(tokenList);
 
                 System.out.print(prog);
 
@@ -127,7 +125,7 @@ public class Editor {
                     Document doc = e.getDocument();
                     String code = doc.getText(0, doc.getLength());
 
-                    ArrayList<Token> tokens = lexer.lex(code);
+                    LinkedList<Token> tokens = lexer.lex(code);
 
                     HashMap<String, Color> tokenColors = new HashMap<>();
                     tokenColors.put(TokenType.FLOAT.name(), Color.RED);

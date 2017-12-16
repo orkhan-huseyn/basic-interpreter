@@ -1,21 +1,15 @@
 package com.csci.lexer;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Lexer {
 
-    /**
-     * Tokenizes input string and returns array list of tokens
-     *
-     * @param String input
-     * @return ArrayList<Token>
-     * */
-    public ArrayList<Token> lex(String input) {
+    public LinkedList<Token> lex(String input) {
 
         // The tokens to return
-        ArrayList<Token> tokens = new ArrayList<Token>();
+        LinkedList<Token> tokens = new LinkedList<>();
 
         // Lexer logic begins here
         StringBuilder tokenPatternsBuffer = new StringBuilder();
