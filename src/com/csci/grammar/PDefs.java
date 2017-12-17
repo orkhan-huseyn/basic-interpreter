@@ -8,4 +8,12 @@ public class PDefs extends Program {
         listdef_ = p1;
     }
 
+    @Override
+    public String toString() {
+        String functions = "";
+        for (Def def : listdef_) {
+            functions += def.toString();
+        }
+        return functions;
+    }
 }

@@ -14,4 +14,8 @@ public class DFun extends Def {
         liststm_ = p4;
     }
 
+    @Override
+    public String toString() {
+        return String.format("Function {type} {name}()", this.type_.toString(), this.id_);
+    }
 }

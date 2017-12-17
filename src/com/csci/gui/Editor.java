@@ -23,7 +23,7 @@ import javax.swing.text.StyleConstants;
 
 import javax.swing.border.EtchedBorder;
 
-import com.csci.components.Prog;
+import com.csci.grammar.Program;
 import com.csci.lexer.Lexer;
 import com.csci.lexer.Token;
 import com.csci.lexer.TokenType;
@@ -35,7 +35,6 @@ public class Editor {
     private JTextPane editorCode;
     private JTextPane editorConsole;
     private Lexer lexer;
-    private Parser parser;
 
     /**
      * Create the application.
@@ -43,7 +42,6 @@ public class Editor {
     public Editor() {
         initialize();
         lexer = new Lexer();
-        parser = new Parser();
     }
 
     /**
@@ -63,11 +61,14 @@ public class Editor {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+
                 String input = editorCode.getText().toString();
 
                 LinkedList<Token> tokenList = lexer.lex(input);
 
-                Prog prog = parser.parse(tokenList);
+                Parser parser = new Parser(tokenList);
+
+                Program prog = parser.parseProgram();
 
                 System.out.print(prog);
 

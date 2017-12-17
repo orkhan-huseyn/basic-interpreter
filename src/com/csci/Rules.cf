@@ -2,11 +2,7 @@ PDefs.   Program ::= [Def] ;
 
 DFun.    Def    ::= Type Id "(" [Arg] ")" "{" [Stm] "}" ;
 
-terminator Def "" ;
-
 ADecl.   Arg    ::= Type Id ;
-
-separator Arg "," ;
 
 SExp.        Stm ::= Exp ";" ;
 SDecls.      Stm ::= Type [Id] ";" ;
@@ -16,8 +12,6 @@ SReturnVoid. Stm ::= "return" ";" ;
 SWhile.      Stm ::= "while" "(" Exp ")" Stm ;
 SBlock.      Stm ::= "{" [Stm] "}" ;
 SIfElse.     Stm ::= "if" "(" Exp ")" Stm "else" Stm ;
-
-terminator Stm "" ;
 
 ETrue.   Exp15  ::= "true" ;
 EFalse.  Exp15  ::= "false" ;
@@ -47,19 +41,3 @@ ENEq.    Exp8   ::= Exp8  "!=" Exp9 ;
 EAnd.    Exp4   ::= Exp4  "&&" Exp5 ;
 EOr.     Exp3   ::= Exp3  "||" Exp4 ;
 EAss.    Exp2   ::= Exp3 "=" Exp2 ;
-
-internal ETyped. Exp15 ::= "(" Exp ":" Type ")" ;
-
-coercions Exp 15 ;
-
-separator Exp "," ;
-
-rules Type   ::= "bool" | "int" | "double" | "void" | "string" ;
-
-token Id (letter (letter | digit | '_')*) ;
-
-separator nonempty Id "," ;
-
-comment "#" ;
-comment "//" ;
-comment "/*" "*/" ;
