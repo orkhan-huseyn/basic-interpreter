@@ -29,23 +29,20 @@ public class Parser implements ParserInterface {
     }
 
     /**
-     * Change lookahead to the next token
-     */
-    private void nextToken() {
-        tokenList.pop();
-        lookahead = tokenList.getFirst();
-    }
-
-    /**
      * Check expected token
      *
      * @param expected token to eat
      * @throws Exception syntax exception
      */
     private void expect(TokenType expected) throws Exception {
-        nextToken();
-        if (lookahead.getType() != expected || tokenList.isEmpty()) {
-            throw new Exception(String.format("Parse error: Unexpected token \"%s\" at %d", lookahead.getData(), lookahead.getPosition()));
+        tokenList.pop();
+        if (tokenList.isEmpty()) {
+            throw new Exception(String.format("Parse error: %s expected", expected.name()));
+        } else {
+            lookahead = tokenList.getFirst();
+            if (lookahead.getType() != expected) {
+                throw new Exception(String.format("Parse error: Unexpected token \"%s\" at position %d", lookahead.getData(), lookahead.getPosition()));
+            }
         }
     }
 
@@ -72,7 +69,7 @@ public class Parser implements ParserInterface {
 
         ListDef listDef = new ListDef();
 
-        if (lookahead.getType() == TokenType.TYPEINT && tokenList.get(2).getType() == TokenType.SCOPESTART) {
+        if (lookahead.getType() == TokenType.TYPEINT) {
 
             Type typeInt = new TypeInt();
             expect(TokenType.IDENT);
@@ -86,19 +83,9 @@ public class Parser implements ParserInterface {
             Def function = new DFun(typeInt, functionName, listArg, listStm);
             listDef.add(function);
 
-        } else if (lookahead.getType() == TokenType.TYPEBOOL && tokenList.get(2).getType() == TokenType.SCOPESTART) {
+        } else {
 
-            Type typeBool = new TypeBool();
-            expect(TokenType.IDENT);
-            String functionName = lookahead.getData();
-            expect(TokenType.BRASTART);
-            ListArg listArg = parseListArg();
-            expect(TokenType.BRAEND);
-            expect(TokenType.SCOPESTART);
-            ListStm listStm = parseListStm();
-            expect(TokenType.SCOPEEND);
-            Def function = new DFun(typeBool, functionName, listArg, listStm);
-            listDef.add(function);
+            throw new Exception(String.format("Expected function but got %s", lookahead.getData()));
 
         }
 
@@ -137,6 +124,12 @@ public class Parser implements ParserInterface {
         return null;
     }
 
+    /**
+     * Parse expression
+     *
+     * @return Exp
+     * @throws Exception syntax exception
+     */
     @Override
     public Exp parseExp() throws Exception {
         return null;
@@ -158,14 +151,13 @@ public class Parser implements ParserInterface {
             expect(TokenType.SEMICOLON);
             SReturn sReturn = new SReturn(exp);
             listStm.add(sReturn);
-        }
-        else if (lookahead.getType() == TokenType.IF) {
+        } else if (lookahead.getType() == TokenType.IF) {
             expect(TokenType.BRASTART);
             Exp condition = parseExp();
             expect(TokenType.BRAEND);
             expect(TokenType.SCOPESTART);
             expect(TokenType.SCOPEEND);
-            SIfElse sIfElse = new SIfElse(condition,null, null);
+            SIfElse sIfElse = new SIfElse(condition, null, null);
             listStm.add(sIfElse);
         }
 
