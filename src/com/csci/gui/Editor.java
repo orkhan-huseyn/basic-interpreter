@@ -62,15 +62,18 @@ public class Editor {
             public void actionPerformed(ActionEvent e) {
 
 
-                String input = editorCode.getText().toString();
+                String input = editorCode.getText();
 
                 LinkedList<Token> tokenList = lexer.lex(input);
 
                 Parser parser = new Parser(tokenList);
 
-                Program prog = parser.parseProgram();
-
-                System.out.print(prog);
+                try {
+                    Program prog = parser.parseProgram();
+                    editorConsole.setText(prog.toString());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
 
             }
         });
@@ -109,6 +112,7 @@ public class Editor {
         splitPane.setLeftComponent(editorCode);
 
         editorConsole = new JTextPane();
+        editorConsole.setEditable(false);
         editorConsole.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
         splitPane.setRightComponent(editorConsole);
     }

@@ -7,19 +7,37 @@ import java.util.LinkedList;
 
 public class Parser implements ParserInterface {
 
-    LinkedList<Token> tokens;
-    Token lookahead;
+    /**
+     * Token list
+     */
+    private LinkedList<Token> tokens;
+    /**
+     * lookahead token
+     */
+    private Token lookahead;
 
+    /**
+     * Parser constrcutro
+     * @param tokens token list
+     */
     public Parser(LinkedList<Token> tokens) {
         this.tokens = tokens;
         lookahead = this.tokens.getFirst();
     }
 
+    /**
+     * change lookahead to the next token
+     */
     private void nextToken() {
         tokens.pop();
         lookahead = tokens.getFirst();
     }
 
+    /**
+     * Check expected token
+     * @param expected expected token
+     * @throws Exception syntax exception
+     */
     private void expect(TokenType expected) throws Exception {
         nextToken();
         if (lookahead.getType() != expected) {
@@ -27,21 +45,35 @@ public class Parser implements ParserInterface {
         }
     }
 
+    /**
+     * Parse Program
+     * @return Program
+     * @throws Exception syntax exception
+     */
     @Override
-    public Program parseProgram() {
-
-        Type typeInt = new TypeInt();
-
-        Def main = new DFun(typeInt, "main", null, null);
+    public Program parseProgram() throws Exception {
 
         ListDef listDef = new ListDef();
-        listDef.add(main);
+
+        if (lookahead.getType() == TokenType.TYPEINT) {
+            Type typeInt = new TypeInt();
+            expect(TokenType.IDENT);
+            String functionName = lookahead.getData();
+            expect(TokenType.BRASTART);
+            expect(TokenType.BRAEND);
+            expect(TokenType.SCOPESTART);
+            expect(TokenType.SCOPEEND);
+            Def function = new DFun(typeInt, functionName, null, null);
+            listDef.add(function);
+        } else {
+            throw new Exception("No main function found!");
+        }
 
         return new PDefs(listDef);
     }
 
     @Override
-    public Def parseDefinition() {
+    public Def parseDefinition() throws Exception {
         return null;
     }
 

@@ -16,6 +16,6 @@ public class DFun extends Def {
 
     @Override
     public String toString() {
-        return String.format("Function {type} {name}()", this.type_.toString(), this.id_);
+        return String.format("function [%s %s]", this.type_.toString(), this.id_);
     }
 }

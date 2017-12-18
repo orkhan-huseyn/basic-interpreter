@@ -10,10 +10,10 @@ public class PDefs extends Program {
 
     @Override
     public String toString() {
-        String functions = "";
+        StringBuilder builder = new StringBuilder();
         for (Def def : listdef_) {
-            functions += def.toString();
+            builder.append(def.toString());
         }
-        return functions;
+        return builder.toString();
     }
 }
