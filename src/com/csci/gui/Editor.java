@@ -51,6 +51,8 @@ public class Editor {
     private void initialize() {
         frame = new JFrame();
         frame.setBounds(100, 50, 900, 700);
+        frame.setLocationRelativeTo(null);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         JToolBar toolBar = new JToolBar();

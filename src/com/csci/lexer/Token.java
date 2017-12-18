@@ -12,6 +12,10 @@ public class Token {
         this.position = position;
     }
 
+    public boolean is(TokenType tokenType) {
+        return this.getType() == tokenType;
+    }
+
     public TokenType getType() {
         return type;
     }
