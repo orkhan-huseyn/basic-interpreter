@@ -32,8 +32,8 @@ import com.csci.parser.Parser;
 public class Editor {
 
     public  JFrame frame;
-    private JTextPane editorCode;
-    private JTextPane editorConsole;
+    private JTextPane editor;
+    private JTextPane console;
     private Lexer lexer;
 
     /**
@@ -57,25 +57,21 @@ public class Editor {
 
         JButton btnParse = new JButton("Parse");
 
-        btnParse.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        btnParse.addActionListener(e -> {
 
+            String input = editor.getText();
 
-                String input = editorCode.getText();
+            LinkedList<Token> tokenList = lexer.lex(input);
 
-                LinkedList<Token> tokenList = lexer.lex(input);
+            Parser parser = new Parser(tokenList);
 
-                Parser parser = new Parser(tokenList);
-
-                try {
-                    Program prog = parser.parseProgram();
-                    editorConsole.setText(prog.toString());
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-
+            try {
+                Program prog = parser.parseProgram();
+                console.setText(prog.toString());
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
+
         });
 
         toolBar.add(btnParse);
@@ -89,8 +85,8 @@ public class Editor {
         splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
         frame.getContentPane().add(splitPane, BorderLayout.CENTER);
 
-        editorCode = new JTextPane();
-        editorCode.getDocument().addDocumentListener(new DocumentListener() {
+        editor = new JTextPane();
+        editor.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void removeUpdate(DocumentEvent e) {
                 highlight(e);
@@ -106,77 +102,75 @@ public class Editor {
 
             }
         });
-        editorCode.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-        editorCode.setFont(new Font("Consolas", Font.PLAIN, 22));
-        editorCode.setMinimumSize(new Dimension(0, 500));
-        splitPane.setLeftComponent(editorCode);
+        editor.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+        editor.setFont(new Font("Consolas", Font.PLAIN, 22));
+        editor.setMinimumSize(new Dimension(0, 500));
+        splitPane.setLeftComponent(editor);
 
-        editorConsole = new JTextPane();
-        editorConsole.setEditable(false);
-        editorConsole.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-        splitPane.setRightComponent(editorConsole);
+        console = new JTextPane();
+        console.setEditable(false);
+        console.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+        splitPane.setRightComponent(console);
     }
 
     /**
      * Highlights tokens
      *
-     * @param e
+     * @param e event
      */
     private void highlight(DocumentEvent e) {
-        Runnable doHighlight = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Document doc = e.getDocument();
-                    String code = doc.getText(0, doc.getLength());
 
-                    LinkedList<Token> tokens = lexer.lex(code);
+        Runnable doHighlight = () -> {
 
-                    HashMap<String, Color> tokenColors = new HashMap<>();
-                    tokenColors.put(TokenType.FLOAT.name(), Color.RED);
-                    tokenColors.put(TokenType.INT.name(), Color.RED);
-                    tokenColors.put(TokenType.STRING.name(), Color.GRAY);
-                    tokenColors.put(TokenType.CHAR.name(), Color.GRAY);
-                    tokenColors.put(TokenType.BOOLEAN.name(), Color.MAGENTA);
-                    tokenColors.put(TokenType.RETURN.name(), Color.BLUE);
-                    tokenColors.put(TokenType.TYPEINT.name(), Color.BLUE);
-                    tokenColors.put(TokenType.TYPEBOOL.name(), Color.BLUE);
-                    tokenColors.put(TokenType.TYPECHAR.name(), Color.BLUE);
-                    tokenColors.put(TokenType.TYPEFLOAT.name(), Color.BLUE);
-                    tokenColors.put(TokenType.TYPESTRING.name(), Color.BLUE);
-                    tokenColors.put(TokenType.TYPEVOID.name(), Color.BLUE);
+            try {
 
-                    HashMap<String, Style> tokenStyles = new HashMap<>();
+                Document doc = e.getDocument();
+                String code = doc.getText(0, doc.getLength());
 
-                    for (String key : tokenColors.keySet()) {
-                        Color color = tokenColors.get(key);
-                        Style style = editorCode.addStyle(key, null);
-                        StyleConstants.setForeground(style, color);
-                        tokenStyles.put(key, style);
-                    }
+                LinkedList<Token> tokens = lexer.lex(code);
 
-                    Style defaultStyle = editorCode.addStyle("default", null);
-                    StyleConstants.setForeground(defaultStyle, Color.BLACK);
+                HashMap<String, Color> tokenColors = new HashMap<>();
+                tokenColors.put(TokenType.FLOAT.name(), Color.RED);
+                tokenColors.put(TokenType.INT.name(), Color.RED);
+                tokenColors.put(TokenType.STRING.name(), Color.GRAY);
+                tokenColors.put(TokenType.CHAR.name(), Color.GRAY);
+                tokenColors.put(TokenType.BOOLEAN.name(), Color.MAGENTA);
+                tokenColors.put(TokenType.RETURN.name(), Color.BLUE);
+                tokenColors.put(TokenType.TYPEINT.name(), Color.BLUE);
+                tokenColors.put(TokenType.TYPEBOOL.name(), Color.BLUE);
+                tokenColors.put(TokenType.TYPECHAR.name(), Color.BLUE);
+                tokenColors.put(TokenType.TYPEFLOAT.name(), Color.BLUE);
+                tokenColors.put(TokenType.TYPESTRING.name(), Color.BLUE);
+                tokenColors.put(TokenType.TYPEVOID.name(), Color.BLUE);
 
-                    // now iterate through tokens and try to highlight them
-                    // see the example below
+                HashMap<String, Style> tokenStyles = new HashMap<>();
 
-                    for (Token token : tokens) {
-                        Style tokenStyle = tokenStyles.get(token.getType().name());
-                        if (tokenStyle != null)
-                            editorCode
-                                    .getStyledDocument()
-                                    .setCharacterAttributes(token.getPosition(), token.getData().length(), tokenStyle, true);
-                        else
-                            editorCode
-                                    .getStyledDocument()
-                                    .setCharacterAttributes(token.getPosition(), token.getData().length(), defaultStyle, true);
-                    }
-                } catch (BadLocationException e1) {
-                    // exception
+                for (String key : tokenColors.keySet()) {
+                    Color color = tokenColors.get(key);
+                    Style style = editor.addStyle(key, null);
+                    StyleConstants.setForeground(style, color);
+                    tokenStyles.put(key, style);
                 }
+
+                Style defaultStyle = editor.addStyle("default", null);
+                StyleConstants.setForeground(defaultStyle, Color.BLACK);
+
+                for (Token token : tokens) {
+                    Style tokenStyle = tokenStyles.get(token.getType().name());
+                    if (tokenStyle != null)
+                        editor
+                                .getStyledDocument()
+                                .setCharacterAttributes(token.getPosition(), token.getData().length(), tokenStyle, true);
+                    else
+                        editor
+                                .getStyledDocument()
+                                .setCharacterAttributes(token.getPosition(), token.getData().length(), defaultStyle, true);
+                }
+            } catch (BadLocationException ex) {
+                ex.printStackTrace();
             }
         };
+
         SwingUtilities.invokeLater(doHighlight);
     }
 
