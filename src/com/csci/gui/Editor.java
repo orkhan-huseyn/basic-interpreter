@@ -10,10 +10,7 @@ import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
-import javax.swing.text.Style;
-import javax.swing.text.StyleConstants;
+import javax.swing.text.*;
 
 import com.csci.lexer.Lexer;
 import com.csci.lexer.Token;
@@ -65,15 +62,20 @@ public class Editor {
 
             String input = editor.getText();
 
-            LinkedList<Token> tokenList = lexer.lex(input);
+            if (input != null && !input.isEmpty()) {
 
-            Parser parser = new Parser(tokenList);
+                LinkedList<Token> tokenList = lexer.lex(input);
 
-            try {
-                Program prog = parser.parseProgram();
-                console.setText(prog.toString());
-            } catch (Exception ex) {
-                ex.printStackTrace();
+                Parser parser = new Parser(tokenList);
+
+                try {
+                    Program program = parser.parseProgram();
+                    console.setText(program.toString());
+                } catch (Exception ex) {
+                    console.setText(ex.getMessage());
+                }
+            } else {
+                console.setText("Nothing to parse!");
             }
 
         });
@@ -115,6 +117,7 @@ public class Editor {
 
         console = new JTextPane();
         console.setEditable(false);
+        console.setFont(new Font("Courier New", Font.PLAIN, 22));
         console.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
         splitPane.setRightComponent(console);
     }

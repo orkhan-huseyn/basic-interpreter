@@ -3,9 +3,7 @@ package com.csci.lexer;
 public class Token {
 
     private TokenType type;
-
     private String data;
-
     private Integer position;
 
     public Token(TokenType type, String data, Integer position) {

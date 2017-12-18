@@ -13,20 +13,20 @@ public interface ParserInterface {
     Program parseProgram() throws Exception;
 
     /**
-     * Parse definitions (functions)
+     * Parse definition list
      *
-     * @return Def
+     * @return ListDef
      * @throws Exception syntax exception
      */
-    Def parseDefinition() throws Exception;
+    ListDef parseListDef() throws Exception;
 
     /**
-     * Parse arguments
+     * Parse argument list
      *
-     * @return Arg
+     * @return ListArg
      * @throws Exception syntax exception
      */
-    Arg parseArgs() throws Exception;
+    ListArg parseListArg() throws Exception;
 
     /**
      * Parse expression
@@ -37,19 +37,11 @@ public interface ParserInterface {
     Exp parseExp() throws Exception;
 
     /**
-     * Parse statement
+     * Parse statement list
      *
-     * @return Stm
+     * @return ListStm
      * @throws Exception syntax exception
      */
-    Stm parseStm() throws Exception;
-
-    /**
-     * Parse type
-     *
-     * @return Type
-     * @throws Exception syntax exception
-     */
-    Type parseType() throws Exception;
+    ListStm parseListStm() throws Exception;
 
 }
