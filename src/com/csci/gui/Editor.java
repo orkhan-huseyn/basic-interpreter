@@ -23,13 +23,25 @@ import com.csci.grammar.Program;
 
 public class Editor {
 
+    /**
+     * Main frame
+     */
     public JFrame frame;
+    /**
+     * editor pane
+     */
     private JTextPane editor;
+    /**
+     * Console pane
+     */
     private JTextPane console;
+    /**
+     * Lexer instance
+     */
     private Lexer lexer;
 
     /**
-     * Create the application.
+     * Constructor
      */
     public Editor() {
         initialize();
@@ -37,7 +49,7 @@ public class Editor {
     }
 
     /**
-     * Initialize the contents of the frame.
+     * Initialize contents of frame
      */
     private void initialize() {
         frame = new JFrame();
@@ -78,6 +90,7 @@ public class Editor {
         frame.getContentPane().add(splitPane, BorderLayout.CENTER);
 
         editor = new JTextPane();
+
         editor.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void removeUpdate(DocumentEvent e) {

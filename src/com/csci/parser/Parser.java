@@ -17,7 +17,7 @@ public class Parser implements ParserInterface {
     private Token lookahead;
 
     /**
-     * Parser constrcutro
+     * Parser constructor
      * @param tokens token list
      */
     public Parser(LinkedList<Token> tokens) {
@@ -41,7 +41,7 @@ public class Parser implements ParserInterface {
     private void expect(TokenType expected) throws Exception {
         nextToken();
         if (lookahead.getType() != expected) {
-            throw new Exception("Parse error");
+            throw new Exception("Parse error: Expected token: " + expected.name() + " but got " + lookahead.getType().name());
         }
     }
 
@@ -57,7 +57,7 @@ public class Parser implements ParserInterface {
 
         if (lookahead.getType() == TokenType.TYPEINT) {
             Type typeInt = new TypeInt();
-            expect(TokenType.IDENT);
+            expect(TokenType.MAIN);
             String functionName = lookahead.getData();
             expect(TokenType.BRASTART);
             expect(TokenType.BRAEND);
