@@ -21,12 +21,28 @@ public interface ParserInterface {
     ListDef parseListDef() throws Exception;
 
     /**
+     * Parse single definition
+     *
+     * @return Def
+     * @throws Exception syntax exception
+     */
+    Def parseDFun() throws Exception;
+
+    /**
      * Parse argument list
      *
      * @return ListArg
      * @throws Exception syntax exception
      */
     ListArg parseListArg() throws Exception;
+
+    /**
+     * Parse single argument
+     *
+     * @return Arg
+     * @throws Exception syntax exception
+     */
+    Arg parseArg() throws Exception;
 
     /**
      * Parse expression
@@ -43,5 +59,13 @@ public interface ParserInterface {
      * @throws Exception syntax exception
      */
     ListStm parseListStm() throws Exception;
+
+    /**
+     * Parse single statement
+     *
+     * @return ListStm
+     * @throws Exception syntax exception
+     */
+    Stm parseStm() throws Exception;
 
 }

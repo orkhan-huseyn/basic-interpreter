@@ -11,7 +11,8 @@ public class Parser implements ParserInterface {
     /**
      * Token list
      */
-    private LinkedList<Token> tokens;
+    private LinkedList<Token> tokenList;
+
     /**
      * lookahead token
      */
@@ -20,30 +21,30 @@ public class Parser implements ParserInterface {
     /**
      * Parser constructor
      *
-     * @param tokens token list
+     * @param tokenList token list
      */
-    public Parser(LinkedList<Token> tokens) {
-        this.tokens = tokens;
-        lookahead = this.tokens.getFirst();
+    public Parser(LinkedList<Token> tokenList) {
+        this.tokenList = tokenList;
+        lookahead = this.tokenList.getFirst();
     }
 
     /**
-     * change lookahead to the next token
+     * Change lookahead to the next token
      */
     private void nextToken() {
-        tokens.pop();
-        lookahead = tokens.getFirst();
+        tokenList.pop();
+        lookahead = tokenList.getFirst();
     }
 
     /**
      * Check expected token
      *
-     * @param expected expected token
+     * @param expected token to eat
      * @throws Exception syntax exception
      */
     private void expect(TokenType expected) throws Exception {
         nextToken();
-        if (lookahead.getType() != expected) {
+        if (lookahead.getType() != expected || tokenList.isEmpty()) {
             throw new Exception(String.format("Parse error: Unexpected token \"%s\" at %d", lookahead.getData(), lookahead.getPosition()));
         }
     }
@@ -56,34 +57,83 @@ public class Parser implements ParserInterface {
      */
     @Override
     public Program parseProgram() throws Exception {
+        ListDef listDef = parseListDef();
+        return new PDefs(listDef);
+    }
+
+    /**
+     * Parse definition list
+     *
+     * @return ListDef
+     * @throws Exception syntax exception
+     */
+    @Override
+    public ListDef parseListDef() throws Exception {
 
         ListDef listDef = new ListDef();
 
-        if (lookahead.getType() == TokenType.TYPEINT) {
+        if (lookahead.getType() == TokenType.TYPEINT && tokenList.get(2).getType() == TokenType.SCOPESTART) {
+
             Type typeInt = new TypeInt();
             expect(TokenType.IDENT);
             String functionName = lookahead.getData();
             expect(TokenType.BRASTART);
+            ListArg listArg = parseListArg();
             expect(TokenType.BRAEND);
             expect(TokenType.SCOPESTART);
             ListStm listStm = parseListStm();
             expect(TokenType.SCOPEEND);
-            Def function = new DFun(typeInt, functionName, null, listStm);
+            Def function = new DFun(typeInt, functionName, listArg, listStm);
             listDef.add(function);
-        } else {
-            throw new Exception("No function found!");
+
+        } else if (lookahead.getType() == TokenType.TYPEBOOL && tokenList.get(2).getType() == TokenType.SCOPESTART) {
+
+            Type typeBool = new TypeBool();
+            expect(TokenType.IDENT);
+            String functionName = lookahead.getData();
+            expect(TokenType.BRASTART);
+            ListArg listArg = parseListArg();
+            expect(TokenType.BRAEND);
+            expect(TokenType.SCOPESTART);
+            ListStm listStm = parseListStm();
+            expect(TokenType.SCOPEEND);
+            Def function = new DFun(typeBool, functionName, listArg, listStm);
+            listDef.add(function);
+
         }
 
-        return new PDefs(listDef);
+        return listDef;
     }
 
-    @Override
-    public ListDef parseListDef() throws Exception {
+    /**
+     * Parse single definition
+     *
+     * @return Def
+     * @throws Exception syntax exception
+     */
+    public Def parseDFun() throws Exception {
         return null;
     }
 
+    /**
+     * Parse argument list
+     *
+     * @return ListArg
+     * @throws Exception syntax exception
+     */
     @Override
     public ListArg parseListArg() throws Exception {
+        return null;
+    }
+
+
+    /**
+     * Parse single argument
+     *
+     * @return Arg
+     * @throws Exception syntax exception
+     */
+    public Arg parseArg() throws Exception {
         return null;
     }
 
@@ -120,5 +170,15 @@ public class Parser implements ParserInterface {
         }
 
         return listStm;
+    }
+
+    /**
+     * Parse single statement
+     *
+     * @return ListStm
+     * @throws Exception syntax exception
+     */
+    public Stm parseStm() throws Exception {
+        return null;
     }
 }
