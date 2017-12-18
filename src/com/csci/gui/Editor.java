@@ -1,19 +1,13 @@
 package com.csci.gui;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.HashMap;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JSplitPane;
-import javax.swing.JTextPane;
-import javax.swing.JToolBar;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.EtchedBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
@@ -21,17 +15,15 @@ import javax.swing.text.Document;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 
-import javax.swing.border.EtchedBorder;
-
-import com.csci.grammar.Program;
 import com.csci.lexer.Lexer;
 import com.csci.lexer.Token;
 import com.csci.lexer.TokenType;
 import com.csci.parser.Parser;
+import com.csci.grammar.Program;
 
 public class Editor {
 
-    public  JFrame frame;
+    public JFrame frame;
     private JTextPane editor;
     private JTextPane console;
     private Lexer lexer;
@@ -50,7 +42,7 @@ public class Editor {
     private void initialize() {
         frame = new JFrame();
         frame.setBounds(100, 50, 900, 700);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         JToolBar toolBar = new JToolBar();
         frame.getContentPane().add(toolBar, BorderLayout.NORTH);
@@ -102,6 +94,7 @@ public class Editor {
 
             }
         });
+
         editor.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
         editor.setFont(new Font("Consolas", Font.PLAIN, 22));
         editor.setMinimumSize(new Dimension(0, 500));
