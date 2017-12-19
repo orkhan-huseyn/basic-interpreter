@@ -2,30 +2,30 @@ package com.csci.visitor;
 
 import com.csci.grammar.*;
 
-public class VisitorImpl implements Visitor {
+public class Evaluator implements Visitor {
 
     @Override
     public String visit(PDefs pDefs) {
-        return "PDefs";
+        return null;
     }
 
     @Override
     public String visit(DFun dFun) {
-        return "DFun";
+        return null;
     }
 
     @Override
     public String visit(SReturn sReturn) {
-        return "SReturn";
+        return null;
     }
 
     @Override
     public String visit(EInt eInt) {
-        return "EInt";
+        return null;
     }
 
     @Override
     public String visit(EPlus ePlus) {
-        return "EPlus";
+        return null;
     }
 }
