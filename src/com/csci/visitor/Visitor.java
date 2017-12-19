@@ -1,17 +1,18 @@
 package com.csci.visitor;
 
-import com.csci.grammar.Def;
-import com.csci.grammar.Exp;
-import com.csci.grammar.Program;
-import com.csci.grammar.Stm;
+
+import com.csci.grammar.*;
 
 public interface Visitor {
 
-    String visit(Def def);
+    String visit(PDefs pDefs);
 
-    String visit(Stm stm);
+    String visit(DFun dFun);
 
-    String visit(Exp exp);
+    String visit(SReturn sReturn);
 
-    String visit(Program program);
+    String visit(EInt eInt);
+
+    String visit(EPlus ePlus);
+
 }

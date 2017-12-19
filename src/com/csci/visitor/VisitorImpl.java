@@ -1,29 +1,31 @@
 package com.csci.visitor;
 
-import com.csci.grammar.Def;
-import com.csci.grammar.Exp;
-import com.csci.grammar.Program;
-import com.csci.grammar.Stm;
+import com.csci.grammar.*;
 
 public class VisitorImpl implements Visitor {
 
     @Override
-    public String visit(Def def) {
-        return null;
+    public String visit(PDefs pDefs) {
+        return "PDefs";
     }
 
     @Override
-    public String visit(Stm stm) {
-        return null;
+    public String visit(DFun dFun) {
+        return "DFun";
     }
 
     @Override
-    public String visit(Exp exp) {
-        return null;
+    public String visit(SReturn sReturn) {
+        return "SReturn";
     }
 
     @Override
-    public String visit(Program program) {
-        return null;
+    public String visit(EInt eInt) {
+        return "EInt";
+    }
+
+    @Override
+    public String visit(EPlus ePlus) {
+        return "EPlus";
     }
 }
