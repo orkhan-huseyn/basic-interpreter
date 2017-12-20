@@ -1,9 +1,8 @@
 package com.csci.grammar;
 
-import com.csci.visitor.Visitable;
 import com.csci.visitor.Visitor;
 
-public class DFun extends Def implements Visitable {
+public class DFun extends Def {
 
     public Type type_;
     public String id_;

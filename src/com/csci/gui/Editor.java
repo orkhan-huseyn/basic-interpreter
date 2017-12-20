@@ -12,11 +12,13 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.*;
 
+import com.csci.grammar.PDefs;
 import com.csci.lexer.Lexer;
 import com.csci.lexer.Token;
 import com.csci.lexer.TokenType;
 import com.csci.parser.Parser;
 import com.csci.grammar.Program;
+import com.csci.visitor.Printer;
 
 public class Editor {
 
@@ -70,9 +72,15 @@ public class Editor {
 
                 Parser parser = new Parser(tokenList);
 
+                Printer printer = new Printer();
+
                 try {
                     Program program = parser.parseProgram();
-                    console.setText(program.toString());
+
+                    String parsedString = printer.visit((PDefs) program);
+
+                    console.setText(parsedString);
+
                 } catch (Exception ex) {
                     console.setText(ex.getMessage());
                 }
