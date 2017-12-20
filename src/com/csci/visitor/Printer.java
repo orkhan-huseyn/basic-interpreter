@@ -11,7 +11,7 @@ public class Printer implements Visitor {
         StringBuilder builder = new StringBuilder();
 
         for (Def def : pDefs.listdef_) {
-            builder.append(this.visit((DFun) def));
+            builder.append(def.accept(this));
         }
 
         return builder.toString();
