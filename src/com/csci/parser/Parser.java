@@ -92,8 +92,6 @@ public class Parser implements ParserInterface {
 
         ListDef listDef = new ListDef();
 
-        System.out.println(lookahead);
-
         if (lookahead.is(TokenType.TYPEINT)) {
 
             Type typeInt = new TypeInt();
@@ -253,9 +251,9 @@ public class Parser implements ParserInterface {
             Exp condition = parseExp();
             expect(TokenType.BRAEND);
             expect(TokenType.SCOPESTART);
-            ListStm stms = parseListStm();
+            ListStm stmts = parseListStm();
             expect(TokenType.SCOPEEND);
-            SWhile sWhile = new SWhile(condition, stms);
+            SWhile sWhile = new SWhile(condition, stmts);
 
             listStm.add(sWhile);
 
