@@ -237,14 +237,27 @@ public class Parser implements ParserInterface {
             Exp condition = parseExp();
             expect(TokenType.BRAEND);
             expect(TokenType.SCOPESTART);
-            Stm stmIf = parseStm();
+            ListStm stmIf = parseListStm();
             expect(TokenType.SCOPEEND);
             expect(TokenType.ELSE);
             expect(TokenType.SCOPESTART);
-            Stm stmElse = parseStm();
+            ListStm stmElse = parseListStm();
             expect(TokenType.SCOPEEND);
             SIfElse sIfElse = new SIfElse(condition, stmIf, stmElse);
+
             listStm.add(sIfElse);
+
+        } else if (lookahead.is(TokenType.WHILE)) {
+
+            expect(TokenType.BRASTART);
+            Exp condition = parseExp();
+            expect(TokenType.BRAEND);
+            expect(TokenType.SCOPESTART);
+            ListStm stms = parseListStm();
+            expect(TokenType.SCOPEEND);
+            SWhile sWhile = new SWhile(condition, stms);
+
+            listStm.add(sWhile);
 
         } else {
 

@@ -4,9 +4,9 @@ public class SIfElse extends Stm {
 
     public Exp exp_;
 
-    public Stm stm_1, stm_2;
+    public ListStm stm_1, stm_2;
 
-    public SIfElse(Exp p1, Stm p2, Stm p3) {
+    public SIfElse(Exp p1, ListStm p2, ListStm p3) {
         exp_ = p1;
         stm_1 = p2;
         stm_2 = p3;
