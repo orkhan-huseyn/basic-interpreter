@@ -1,9 +1,8 @@
 package com.csci.grammar;
 
-import com.csci.visitor.Visitable;
 import com.csci.visitor.Visitor;
 
-public class PDefs extends Program implements Visitable {
+public class PDefs extends Program {
 
     public ListDef listdef_;
 
