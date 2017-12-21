@@ -198,6 +198,50 @@ public class Parser implements ParserInterface {
             nextToken();
             return new EDecr(eInt);
 
+        } else if (lookahead.is(TokenType.FLOAT) && lookahead(1).is(TokenType.PLUS)) {
+
+            EDouble eDouble = new EDouble(Double.parseDouble(lookahead.getData()));
+            nextToken();
+            Exp exp = parseExp();
+            return new EPlus(eDouble, exp);
+
+        } else if (lookahead.is(TokenType.FLOAT) && lookahead(1).is(TokenType.MINUS)) {
+
+            EDouble eDouble = new EDouble(Double.parseDouble(lookahead.getData()));
+            nextToken();
+            Exp exp = parseExp();
+            return new EMinus(eDouble, exp);
+
+        } else if (lookahead.is(TokenType.FLOAT) && lookahead(1).is(TokenType.DIV)) {
+
+            EDouble eDouble = new EDouble(Double.parseDouble(lookahead.getData()));
+            nextToken();
+            Exp exp = parseExp();
+            return new EDiv(eDouble, exp);
+
+        } else if (lookahead.is(TokenType.FLOAT) && lookahead(1).is(TokenType.PROD)) {
+
+            EDouble eDouble = new EDouble(Double.parseDouble(lookahead.getData()));
+            nextToken();
+            Exp exp = parseExp();
+            return new ETimes(eDouble, exp);
+
+        } else if (lookahead.is(TokenType.FLOAT) && lookahead(1).is(TokenType.INCREMENT)) {
+
+            EDouble eDouble = new EDouble(Double.parseDouble(lookahead.getData()));
+            nextToken();
+            return new EIncr(eDouble);
+
+        } else if (lookahead.is(TokenType.FLOAT) && lookahead(1).is(TokenType.DECREMENT)) {
+
+            EDouble eDouble = new EDouble(Double.parseDouble(lookahead.getData()));
+            nextToken();
+            return new EDecr(eDouble);
+
+        } else if (lookahead.is(TokenType.FLOAT)) {
+
+            return new EInt(Integer.parseInt(lookahead.getData()));
+
         } else if (lookahead.is(TokenType.INT)) {
 
             return new EInt(Integer.parseInt(lookahead.getData()));

@@ -114,7 +114,7 @@ public class Printer implements Visitor {
 
     @Override
     public String visit(EDouble eDouble) {
-        return null;
+        return "EDouble => " + eDouble.double_.toString();
     }
 
     @Override
