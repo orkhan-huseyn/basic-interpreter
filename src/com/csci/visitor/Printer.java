@@ -19,12 +19,27 @@ public class Printer implements Visitor {
 
     @Override
     public String visit(DFun dFun) {
-        return "FUNCTION";
+
+        StringBuilder builder = new StringBuilder();
+
+        builder.append(String.format("DFun (%s) => ", dFun.id_));
+
+        for (Stm stm : dFun.liststm_) {
+            builder.append(stm.accept(this));
+        }
+
+        return builder.toString();
     }
 
     @Override
     public String visit(SReturn sReturn) {
-        return null;
+
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("SReturn => ");
+        builder.append(sReturn.exp_.accept(this));
+
+        return builder.toString();
     }
 
     @Override
@@ -84,7 +99,7 @@ public class Printer implements Visitor {
 
     @Override
     public String visit(EInt eInt) {
-        return null;
+        return "EInt => " + eInt.integer_.toString();
     }
 
     @Override
@@ -159,7 +174,14 @@ public class Printer implements Visitor {
 
     @Override
     public String visit(EPlus ePlus) {
-        return null;
+
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("EPlus => ");
+        builder.append(ePlus.exp_1.accept(this));
+        builder.append(ePlus.exp_2.accept(this));
+
+        return builder.toString();
     }
 
     @Override
@@ -184,7 +206,7 @@ public class Printer implements Visitor {
 
     @Override
     public String visit(TypeInt typeInt) {
-        return null;
+        return "int";
     }
 
     @Override
