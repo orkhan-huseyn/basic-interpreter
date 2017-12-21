@@ -92,25 +92,11 @@ public class Parser implements ParserInterface {
 
         ListDef listDef = new ListDef();
 
-        if (lookahead.is(TokenType.TYPEINT)) {
+        Def def = parseDef();
 
-            Type typeInt = new TypeInt();
-            expect(TokenType.IDENT);
-            String functionName = lookahead.getData();
-            expect(TokenType.BRASTART);
-            ListArg listArg = parseListArg();
-            expect(TokenType.BRAEND);
-            expect(TokenType.SCOPESTART);
-            ListStm listStm = parseListStm();
-            expect(TokenType.SCOPEEND);
-            Def function = new DFun(typeInt, functionName, listArg, listStm);
-
-            listDef.add(function);
-
-        } else {
-
-            throw new Exception("Parse error: Function expected!");
-
+        if (def != null) {
+            listDef.add(def);
+            listDef.addAll(parseListDef());
         }
 
         return listDef;
@@ -123,6 +109,23 @@ public class Parser implements ParserInterface {
      * @throws Exception syntax exception
      */
     public Def parseDef() throws Exception {
+
+        if (lookahead.is(TokenType.TYPEINT)) {
+
+            Type typeInt = new TypeInt();
+            expect(TokenType.IDENT);
+            String functionName = lookahead.getData();
+            expect(TokenType.BRASTART);
+            ListArg listArg = parseListArg();
+            expect(TokenType.BRAEND);
+            expect(TokenType.SCOPESTART);
+            ListStm listStm = parseListStm();
+            expect(TokenType.SCOPEEND);
+
+            return new DFun(typeInt, functionName, listArg, listStm);
+
+        }
+
         return null;
     }
 
