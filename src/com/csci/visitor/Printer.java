@@ -4,7 +4,6 @@ import com.csci.grammar.*;
 
 public class Printer implements Visitor {
 
-
     @Override
     public String visit(PDefs pDefs) {
 

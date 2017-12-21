@@ -19,6 +19,7 @@ import com.csci.lexer.TokenType;
 import com.csci.parser.Parser;
 import com.csci.grammar.Program;
 import com.csci.visitor.Printer;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Editor {
 
@@ -75,6 +76,7 @@ public class Editor {
                 Printer printer = new Printer();
 
                 try {
+
                     Program program = parser.parseProgram();
 
                     String parsedString = printer.visit((PDefs) program);
@@ -85,7 +87,9 @@ public class Editor {
                     console.setText(ex.getMessage());
                 }
             } else {
+
                 console.setText("Nothing to parse!");
+
             }
 
         });
