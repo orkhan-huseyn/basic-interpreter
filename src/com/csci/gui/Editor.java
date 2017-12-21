@@ -20,6 +20,7 @@ import com.csci.parser.Parser;
 import com.csci.grammar.Program;
 import com.csci.visitor.Printer;
 
+
 public class Editor {
 
     /**
@@ -83,7 +84,7 @@ public class Editor {
                     console.setText(parsedString);
 
                 } catch (Exception ex) {
-                    console.setText(ex.getMessage());
+                    console.setText(ex.toString());
                 }
             } else {
 
@@ -158,6 +159,9 @@ public class Editor {
                 tokenColors.put(TokenType.CHAR.name(), Color.GRAY);
                 tokenColors.put(TokenType.BOOLEAN.name(), Color.MAGENTA);
                 tokenColors.put(TokenType.RETURN.name(), Color.BLUE);
+                tokenColors.put(TokenType.IF.name(), Color.BLUE);
+                tokenColors.put(TokenType.ELSE.name(), Color.BLUE);
+                tokenColors.put(TokenType.WHILE.name(), Color.BLUE);
                 tokenColors.put(TokenType.TYPEINT.name(), Color.BLUE);
                 tokenColors.put(TokenType.TYPEBOOL.name(), Color.BLUE);
                 tokenColors.put(TokenType.TYPECHAR.name(), Color.BLUE);

@@ -26,7 +26,7 @@ public interface ParserInterface {
      * @return Def
      * @throws Exception syntax exception
      */
-    Def parseDFun() throws Exception;
+    Def parseDef() throws Exception;
 
     /**
      * Parse argument list

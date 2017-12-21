@@ -53,7 +53,14 @@ public class Printer implements Visitor {
 
     @Override
     public String visit(SInit sInit) {
-        return null;
+
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("SInit => ");
+        builder.append(sInit.id_);
+        builder.append(sInit.exp_.accept(this));
+
+        return builder.toString();
     }
 
     @Override

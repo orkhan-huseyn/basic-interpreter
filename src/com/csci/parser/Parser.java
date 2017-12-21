@@ -104,6 +104,7 @@ public class Parser implements ParserInterface {
             ListStm listStm = parseListStm();
             expect(TokenType.SCOPEEND);
             Def function = new DFun(typeInt, functionName, listArg, listStm);
+
             listDef.add(function);
 
         } else {
@@ -121,7 +122,7 @@ public class Parser implements ParserInterface {
      * @return Def
      * @throws Exception syntax exception
      */
-    public Def parseDFun() throws Exception {
+    public Def parseDef() throws Exception {
         return null;
     }
 
@@ -240,7 +241,7 @@ public class Parser implements ParserInterface {
 
         } else if (lookahead.is(TokenType.FLOAT)) {
 
-            return new EInt(Integer.parseInt(lookahead.getData()));
+            return new EDouble(Double.parseDouble(lookahead.getData()));
 
         } else if (lookahead.is(TokenType.INT)) {
 
@@ -262,16 +263,33 @@ public class Parser implements ParserInterface {
     @Override
     public ListStm parseListStm() throws Exception {
 
-        nextToken();
-
         ListStm listStm = new ListStm();
+
+        Stm stm = parseStm();
+
+        if (stm != null) {
+            listStm.add(stm);
+        }
+
+        return listStm;
+    }
+
+    /**
+     * Parse single statement
+     *
+     * @return ListStm
+     * @throws Exception syntax exception
+     */
+    public Stm parseStm() throws Exception {
+
+        nextToken();
 
         if (lookahead.is(TokenType.RETURN)) {
 
             Exp exp = parseExp();
             expect(TokenType.SEMICOLON);
-            SReturn sReturn = new SReturn(exp);
-            listStm.add(sReturn);
+
+            return new SReturn(exp);
 
         } else if (lookahead.is(TokenType.IF)) {
 
@@ -285,9 +303,8 @@ public class Parser implements ParserInterface {
             expect(TokenType.SCOPESTART);
             ListStm stmElse = parseListStm();
             expect(TokenType.SCOPEEND);
-            SIfElse sIfElse = new SIfElse(condition, stmIf, stmElse);
 
-            listStm.add(sIfElse);
+            return new SIfElse(condition, stmIf, stmElse);
 
         } else if (lookahead.is(TokenType.WHILE)) {
 
@@ -297,26 +314,65 @@ public class Parser implements ParserInterface {
             expect(TokenType.SCOPESTART);
             ListStm stmts = parseListStm();
             expect(TokenType.SCOPEEND);
-            SWhile sWhile = new SWhile(condition, stmts);
 
-            listStm.add(sWhile);
+            return new SWhile(condition, stmts);
 
-        } else {
 
-            throw new Exception("Parse error: Statement expected!");
+        } else if (lookahead.is(TokenType.TYPEINT) && lookahead(1).is(TokenType.IDENT)) {
+
+            TypeInt typeInt = new TypeInt();
+            nextToken();
+            String varName = lookahead.getData();
+            expect(TokenType.ASSIGNMENT);
+            Exp exp = parseExp();
+            expect(TokenType.SEMICOLON);
+
+            return new SInit(typeInt, varName, exp);
+
+
+        } else if (lookahead.is(TokenType.TYPEBOOL) && lookahead(1).is(TokenType.IDENT)) {
+
+            TypeBool typeBool = new TypeBool();
+            nextToken();
+            String varName = lookahead.getData();
+            expect(TokenType.ASSIGNMENT);
+            Exp exp = parseExp();
+            expect(TokenType.SEMICOLON);
+
+            return new SInit(typeBool, varName, exp);
+
+
+        } else if (lookahead.is(TokenType.TYPEFLOAT) && lookahead(1).is(TokenType.IDENT)) {
+
+            TypeDouble typeDouble = new TypeDouble();
+            nextToken();
+            String varName = lookahead.getData();
+            expect(TokenType.ASSIGNMENT);
+            Exp exp = parseExp();
+            expect(TokenType.SEMICOLON);
+
+            return new SInit(typeDouble, varName, exp);
+
+
+        } else if (lookahead.is(TokenType.TYPESTRING) && lookahead(1).is(TokenType.IDENT)) {
+
+            TypeString typeString = new TypeString();
+            nextToken();
+            String varName = lookahead.getData();
+            expect(TokenType.ASSIGNMENT);
+            Exp exp = parseExp();
+            expect(TokenType.SEMICOLON);
+
+            return new SInit(typeString, varName, exp);
+
+        } else if (lookahead.is(TokenType.IDENT)) {
+
+            String varName = lookahead.getData();
+
+            return new SExp(new EId(varName));
 
         }
 
-        return listStm;
-    }
-
-    /**
-     * Parse single statement
-     *
-     * @return ListStm
-     * @throws Exception syntax exception
-     */
-    public Stm parseStm() throws Exception {
         return null;
     }
 }
