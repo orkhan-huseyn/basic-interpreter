@@ -269,6 +269,7 @@ public class Parser implements ParserInterface {
 
         if (stm != null) {
             listStm.add(stm);
+            listStm.addAll(parseListStm());
         }
 
         return listStm;
