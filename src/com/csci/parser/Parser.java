@@ -258,6 +258,13 @@ public class Parser implements ParserInterface {
             nextToken();
             return new EDecr(eDouble);
 
+        } else if (first.is(TokenType.IDENT)) {
+
+            nextToken();
+            String varName = lookahead.getData();
+
+            return new EId(varName);
+
         } else if (first.is(TokenType.FLOAT)) {
 
             nextToken();
@@ -399,9 +406,9 @@ public class Parser implements ParserInterface {
 
             nextToken();
 
-            String varName = lookahead.getData();
+            Exp exp = parseExp();
 
-            return new SExp(new EId(varName));
+            return new SExp(exp);
 
         }
 

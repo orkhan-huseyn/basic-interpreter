@@ -16,6 +16,7 @@ public class Printer implements Visitor {
         return builder.toString();
     }
 
+
     @Override
     public String visit(DFun dFun) {
 
@@ -65,12 +66,25 @@ public class Printer implements Visitor {
 
     @Override
     public String visit(SExp sExp) {
-        return null;
+
+        return "SExp => " + sExp.exp_.accept(this);
     }
 
     @Override
     public String visit(SIfElse sIfElse) {
-        return null;
+
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("SIfElse => ");
+        builder.append(sIfElse.exp_.accept(this));
+        for (Stm stm : sIfElse.stm_1) {
+            builder.append(stm.accept(this));
+        }
+        for (Stm stm : sIfElse.stm_2) {
+            builder.append(stm.accept(this));
+        }
+
+        return builder.toString();
     }
 
     @Override
@@ -80,7 +94,7 @@ public class Printer implements Visitor {
 
     @Override
     public String visit(EId eId) {
-        return null;
+        return "EId => " + eId.id_;
     }
 
     @Override
