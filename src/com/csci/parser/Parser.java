@@ -166,7 +166,53 @@ public class Parser implements ParserInterface {
         Token first = lookahead(1);
         Token second = lookahead(2);
 
-        if (first.is(TokenType.INT) && second.is(TokenType.PLUS)) {
+        if (first.is(TokenType.IDENT) && second.is(TokenType.PLUS)) {
+
+            nextToken();
+            EId eId = new EId(lookahead.getData());
+            nextToken();
+            Exp exp = parseExp();
+            return new EPlus(eId, exp);
+
+        } else if (first.is(TokenType.IDENT) && second.is(TokenType.MINUS)) {
+
+            nextToken();
+            EId eId = new EId(lookahead.getData());
+            nextToken();
+            Exp exp = parseExp();
+            return new EMinus(eId, exp);
+
+        } else if (first.is(TokenType.IDENT) && second.is(TokenType.DIV)) {
+
+            nextToken();
+            EId eId = new EId(lookahead.getData());
+            nextToken();
+            Exp exp = parseExp();
+            return new EDiv(eId, exp);
+
+        } else if (first.is(TokenType.IDENT) && first.is(TokenType.PROD)) {
+
+            nextToken();
+            EId eId = new EId(lookahead.getData());
+            nextToken();
+            Exp exp = parseExp();
+            return new ETimes(eId, exp);
+
+        } else if (first.is(TokenType.IDENT) && second.is(TokenType.INCREMENT)) {
+
+            nextToken();
+            EId eId = new EId(lookahead.getData());
+            nextToken();
+            return new EIncr(eId);
+
+        } else if (first.is(TokenType.IDENT) && second.is(TokenType.DECREMENT)) {
+
+            nextToken();
+            EId eId = new EId(lookahead.getData());
+            nextToken();
+            return new EDecr(eId);
+
+        } else if (first.is(TokenType.INT) && second.is(TokenType.PLUS)) {
 
             nextToken();
             EInt eInt = new EInt(Integer.parseInt(lookahead.getData()));

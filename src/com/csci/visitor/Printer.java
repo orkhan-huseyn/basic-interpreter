@@ -89,7 +89,16 @@ public class Printer implements Visitor {
 
     @Override
     public String visit(SWhile sWhile) {
-        return null;
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("SWhile => ");
+        builder.append(sWhile.exp_.accept(this));
+
+        for (Stm stm : sWhile.stm_) {
+            builder.append(stm.accept(this));
+        }
+
+        return builder.toString();
     }
 
     @Override
@@ -124,12 +133,12 @@ public class Printer implements Visitor {
 
     @Override
     public String visit(ETrue eTrue) {
-        return null;
+        return "ETrue => true";
     }
 
     @Override
     public String visit(EFalse eFalse) {
-        return null;
+        return "EFalse => false ";
     }
 
     @Override
@@ -139,7 +148,7 @@ public class Printer implements Visitor {
 
     @Override
     public String visit(EString eString) {
-        return null;
+        return "EString => " + eString.string_;
     }
 
     @Override
@@ -206,22 +215,40 @@ public class Printer implements Visitor {
 
     @Override
     public String visit(EMinus eMinus) {
-        return null;
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("EMinus => ");
+        builder.append(eMinus.exp_1.accept(this));
+        builder.append(eMinus.exp_2.accept(this));
+
+        return builder.toString();
     }
 
     @Override
     public String visit(EDiv eDiv) {
-        return null;
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("EDiv => ");
+        builder.append(eDiv.exp_1.accept(this));
+        builder.append(eDiv.exp_2.accept(this));
+
+        return builder.toString();
     }
 
     @Override
     public String visit(ETimes eTimes) {
-        return null;
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("ETimes => ");
+        builder.append(eTimes.exp_1.accept(this));
+        builder.append(eTimes.exp_2.accept(this));
+
+        return builder.toString();
     }
 
     @Override
     public String visit(TypeBool typeBool) {
-        return null;
+        return "bool";
     }
 
     @Override
@@ -231,16 +258,16 @@ public class Printer implements Visitor {
 
     @Override
     public String visit(TypeDouble typeDouble) {
-        return null;
+        return "float";
     }
 
     @Override
     public String visit(TypeString typeString) {
-        return null;
+        return "string";
     }
 
     @Override
     public String visit(TypeVoid typeVoid) {
-        return null;
+        return "void";
     }
 }
