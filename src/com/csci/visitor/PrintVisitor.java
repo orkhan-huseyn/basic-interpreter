@@ -3,7 +3,7 @@ package com.csci.visitor;
 
 import com.csci.grammar.*;
 
-public interface Visitor {
+public interface PrintVisitor {
 
     String visit(PDefs pDefs);
 

@@ -2,195 +2,208 @@ package com.csci.visitor;
 
 import com.csci.grammar.*;
 
-public class Evaluator implements Visitor {
+import java.util.HashMap;
+import java.util.Map;
 
-    @Override
-    public String visit(PDefs pDefs) {
-        return null;
+public class Evaluator implements EvalVisitor {
+
+    Map<String, String> GLOBAL_SCOPE;
+
+    public Evaluator() {
+        GLOBAL_SCOPE = new HashMap<>();
     }
 
     @Override
-    public String visit(DFun dFun) {
-        return null;
+    public void visit(PDefs pDefs) {
+        for (Def def : pDefs.listdef_) {
+            def.eval(this);
+        }
     }
 
     @Override
-    public String visit(SReturn sReturn) {
-        return null;
+    public void visit(DFun dFun) {
+        for (Stm stm : dFun.liststm_) {
+            stm.eval(this);
+        }
     }
 
     @Override
-    public String visit(SDecls sDecls) {
-        return null;
+    public void visit(SReturn sReturn) {
+
     }
 
     @Override
-    public String visit(ADecl aDecl) {
-        return null;
+    public void visit(SDecls sDecls) {
+
     }
 
     @Override
-    public String visit(SInit sInit) {
-        return null;
+    public void visit(ADecl aDecl) {
+
     }
 
     @Override
-    public String visit(SExp sExp) {
-        return null;
+    public void visit(SInit sInit) {
+
     }
 
     @Override
-    public String visit(SIfElse sIfElse) {
-        return null;
+    public void visit(SExp sExp) {
+
     }
 
     @Override
-    public String visit(SWhile sWhile) {
-        return null;
+    public void visit(SIfElse sIfElse) {
+
     }
 
     @Override
-    public String visit(EId eId) {
-        return null;
+    public void visit(SWhile sWhile) {
+
     }
 
     @Override
-    public String visit(EIncr eIncr) {
-        return null;
+    public void visit(EId eId) {
+
     }
 
     @Override
-    public String visit(EPIncr epIncr) {
-        return null;
+    public void visit(EIncr eIncr) {
+
     }
 
     @Override
-    public String visit(EDecr eDecr) {
-        return null;
+    public void visit(EPIncr epIncr) {
+
     }
 
     @Override
-    public String visit(EPDecr epDecr) {
-        return null;
+    public void visit(EDecr eDecr) {
+
     }
 
     @Override
-    public String visit(EInt eInt) {
-        return null;
+    public void visit(EPDecr epDecr) {
+
     }
 
     @Override
-    public String visit(ETrue eTrue) {
-        return null;
+    public void visit(EInt eInt) {
+
     }
 
     @Override
-    public String visit(EFalse eFalse) {
-        return null;
+    public void visit(ETrue eTrue) {
+
     }
 
     @Override
-    public String visit(EDouble eDouble) {
-        return null;
+    public void visit(EFalse eFalse) {
+
     }
 
     @Override
-    public String visit(EString eString) {
-        return null;
+    public void visit(EDouble eDouble) {
+
     }
 
     @Override
-    public String visit(EEq eEq) {
-        return null;
+    public void visit(EString eString) {
+
     }
 
     @Override
-    public String visit(ENEq enEq) {
-        return null;
+    public void visit(EEq eEq) {
+
     }
 
     @Override
-    public String visit(EGt eGt) {
-        return null;
+    public void visit(ENEq enEq) {
+
     }
 
     @Override
-    public String visit(EGtEq eGtEq) {
-        return null;
+    public void visit(EGt eGt) {
+
     }
 
     @Override
-    public String visit(ELt eLt) {
-        return null;
+    public void visit(EGtEq eGtEq) {
+
     }
 
     @Override
-    public String visit(ELtEq eLtEq) {
-        return null;
+    public void visit(ELt eLt) {
+
     }
 
     @Override
-    public String visit(EAnd eAnd) {
-        return null;
+    public void visit(ELtEq eLtEq) {
+
     }
 
     @Override
-    public String visit(EOr eOr) {
-        return null;
+    public void visit(EAnd eAnd) {
+
     }
 
     @Override
-    public String visit(EApp eApp) {
-        return null;
+    public void visit(EOr eOr) {
+
     }
 
     @Override
-    public String visit(EAss eAss) {
-        return null;
+    public void visit(EApp eApp) {
+
     }
 
     @Override
-    public String visit(EPlus ePlus) {
-        return null;
+    public void visit(EAss eAss) {
+
     }
 
     @Override
-    public String visit(EMinus eMinus) {
-        return null;
+    public void visit(EPlus ePlus) {
+
     }
 
     @Override
-    public String visit(EDiv eDiv) {
-        return null;
+    public void visit(EMinus eMinus) {
+
     }
 
     @Override
-    public String visit(ETimes eTimes) {
-        return null;
+    public void visit(EDiv eDiv) {
+
     }
 
     @Override
-    public String visit(TypeBool typeBool) {
-        return null;
+    public void visit(ETimes eTimes) {
+
     }
 
     @Override
-    public String visit(TypeInt typeInt) {
-        return null;
+    public void visit(TypeBool typeBool) {
+
     }
 
     @Override
-    public String visit(TypeDouble typeDouble) {
-        return null;
+    public void visit(TypeInt typeInt) {
+
     }
 
     @Override
-    public String visit(TypeString typeString) {
-        return null;
+    public void visit(TypeDouble typeDouble) {
+
     }
 
     @Override
-    public String visit(TypeVoid typeVoid) {
-        return null;
+    public void visit(TypeString typeString) {
+
+    }
+
+    @Override
+    public void visit(TypeVoid typeVoid) {
+
     }
 }

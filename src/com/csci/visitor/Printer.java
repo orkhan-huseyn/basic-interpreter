@@ -2,7 +2,7 @@ package com.csci.visitor;
 
 import com.csci.grammar.*;
 
-public class Printer implements Visitor {
+public class Printer implements PrintVisitor {
 
     @Override
     public String visit(PDefs pDefs) {

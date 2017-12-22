@@ -1,6 +1,7 @@
 package com.csci.grammar;
 
-import com.csci.visitor.Visitor;
+import com.csci.visitor.EvalVisitor;
+import com.csci.visitor.PrintVisitor;
 
 public class SExp extends Stm {
 
@@ -11,8 +12,13 @@ public class SExp extends Stm {
     }
 
     @Override
-    public String accept(Visitor visitor) {
+    public String accept(PrintVisitor visitor) {
         return visitor.visit(this);
+    }
+
+    @Override
+    public void eval(EvalVisitor visitor) {
+        visitor.visit(this);
     }
 
 }
