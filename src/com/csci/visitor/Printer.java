@@ -8,6 +8,7 @@ public class Printer implements Visitor {
     public String visit(PDefs pDefs) {
 
         StringBuilder builder = new StringBuilder();
+        builder.append("Program: ");
 
         for (Def def : pDefs.listdef_) {
             builder.append(def.accept(this));
@@ -22,7 +23,7 @@ public class Printer implements Visitor {
 
         StringBuilder builder = new StringBuilder();
 
-        builder.append(String.format("DFun (%s) => ", dFun.id_));
+        builder.append("DFun: ");
 
         for (Stm stm : dFun.liststm_) {
             builder.append(stm.accept(this));
@@ -36,7 +37,7 @@ public class Printer implements Visitor {
 
         StringBuilder builder = new StringBuilder();
 
-        builder.append("SReturn => ");
+        builder.append("SReturn: ");
         builder.append(sReturn.exp_.accept(this));
 
         return builder.toString();
@@ -57,7 +58,7 @@ public class Printer implements Visitor {
 
         StringBuilder builder = new StringBuilder();
 
-        builder.append("SInit => ");
+        builder.append("SInit: ");
         builder.append(sInit.id_);
         builder.append(sInit.exp_.accept(this));
 
@@ -67,7 +68,7 @@ public class Printer implements Visitor {
     @Override
     public String visit(SExp sExp) {
 
-        return "SExp => " + sExp.exp_.accept(this);
+        return "SExp: " + sExp.exp_.accept(this);
     }
 
     @Override
@@ -75,7 +76,7 @@ public class Printer implements Visitor {
 
         StringBuilder builder = new StringBuilder();
 
-        builder.append("SIfElse => ");
+        builder.append("SIfElse: ");
         builder.append(sIfElse.exp_.accept(this));
         for (Stm stm : sIfElse.stm_1) {
             builder.append(stm.accept(this));
@@ -91,7 +92,7 @@ public class Printer implements Visitor {
     public String visit(SWhile sWhile) {
         StringBuilder builder = new StringBuilder();
 
-        builder.append("SWhile => ");
+        builder.append("SWhile: ");
         builder.append(sWhile.exp_.accept(this));
 
         for (Stm stm : sWhile.stm_) {
@@ -103,7 +104,7 @@ public class Printer implements Visitor {
 
     @Override
     public String visit(EId eId) {
-        return "EId => " + eId.id_;
+        return "EId: " + eId.id_;
     }
 
     @Override
@@ -128,27 +129,27 @@ public class Printer implements Visitor {
 
     @Override
     public String visit(EInt eInt) {
-        return "EInt => " + eInt.integer_.toString();
+        return "EInt: " + eInt.integer_.toString();
     }
 
     @Override
     public String visit(ETrue eTrue) {
-        return "ETrue => true";
+        return "ETrue: true";
     }
 
     @Override
     public String visit(EFalse eFalse) {
-        return "EFalse => false ";
+        return "EFalse: false ";
     }
 
     @Override
     public String visit(EDouble eDouble) {
-        return "EDouble => " + eDouble.double_.toString();
+        return "EDouble: " + eDouble.double_.toString();
     }
 
     @Override
     public String visit(EString eString) {
-        return "EString => " + eString.string_;
+        return "EString: " + eString.string_;
     }
 
     @Override
@@ -206,7 +207,7 @@ public class Printer implements Visitor {
 
         StringBuilder builder = new StringBuilder();
 
-        builder.append("EPlus => ");
+        builder.append("EPlus: ");
         builder.append(ePlus.exp_1.accept(this));
         builder.append(ePlus.exp_2.accept(this));
 
@@ -217,7 +218,7 @@ public class Printer implements Visitor {
     public String visit(EMinus eMinus) {
         StringBuilder builder = new StringBuilder();
 
-        builder.append("EMinus => ");
+        builder.append("EMinus: ");
         builder.append(eMinus.exp_1.accept(this));
         builder.append(eMinus.exp_2.accept(this));
 
@@ -228,7 +229,7 @@ public class Printer implements Visitor {
     public String visit(EDiv eDiv) {
         StringBuilder builder = new StringBuilder();
 
-        builder.append("EDiv => ");
+        builder.append("EDiv: ");
         builder.append(eDiv.exp_1.accept(this));
         builder.append(eDiv.exp_2.accept(this));
 
@@ -239,7 +240,7 @@ public class Printer implements Visitor {
     public String visit(ETimes eTimes) {
         StringBuilder builder = new StringBuilder();
 
-        builder.append("ETimes => ");
+        builder.append("ETimes: ");
         builder.append(eTimes.exp_1.accept(this));
         builder.append(eTimes.exp_2.accept(this));
 
