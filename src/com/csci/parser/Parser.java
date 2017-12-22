@@ -166,6 +166,11 @@ public class Parser implements ParserInterface {
         Token first = lookahead(1);
         Token second = lookahead(2);
 
+        System.out.println(lookahead);
+        System.out.println(first);
+        System.out.println(second);
+        System.out.println("=================");
+
         if (first.is(TokenType.IDENT) && second.is(TokenType.PLUS)) {
 
             nextToken();
@@ -190,7 +195,7 @@ public class Parser implements ParserInterface {
             Exp exp = parseExp();
             return new EDiv(eId, exp);
 
-        } else if (first.is(TokenType.IDENT) && first.is(TokenType.PROD)) {
+        } else if (first.is(TokenType.IDENT) && second.is(TokenType.PROD)) {
 
             nextToken();
             EId eId = new EId(lookahead.getData());
@@ -236,7 +241,7 @@ public class Parser implements ParserInterface {
             Exp exp = parseExp();
             return new EDiv(eInt, exp);
 
-        } else if (first.is(TokenType.INT) && first.is(TokenType.PROD)) {
+        } else if (first.is(TokenType.INT) && second.is(TokenType.PROD)) {
 
             nextToken();
             EInt eInt = new EInt(Integer.parseInt(lookahead.getData()));
