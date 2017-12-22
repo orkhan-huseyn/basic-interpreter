@@ -49,7 +49,8 @@ public enum TokenType {
     BREAK("break"),
     CONTINUE("continue"),
     // ident (varable or function name)
-    IDENT("[a-zA-Z0-9_]+");
+    IDENT("[a-zA-Z0-9_]+"),
+    EOF("EOF");
 
     public final String pattern;
 

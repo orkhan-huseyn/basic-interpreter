@@ -41,7 +41,10 @@ public class Parser implements ParserInterface {
      * @return token at index
      */
     private Token lookahead(Integer index) {
-        return tokenList.get(index);
+        if (tokenList.size() > index) {
+            return tokenList.get(index);
+        }
+        return new Token(TokenType.WHITESPACE, "", 0);
     }
 
     /**
@@ -160,94 +163,109 @@ public class Parser implements ParserInterface {
     @Override
     public Exp parseExp() throws Exception {
 
-        nextToken();
+        Token first = lookahead(1);
+        Token second = lookahead(2);
 
-        if (lookahead.is(TokenType.INT) && lookahead(1).is(TokenType.PLUS)) {
+        if (first.is(TokenType.INT) && second.is(TokenType.PLUS)) {
 
+            nextToken();
             EInt eInt = new EInt(Integer.parseInt(lookahead.getData()));
             nextToken();
             Exp exp = parseExp();
             return new EPlus(eInt, exp);
 
-        } else if (lookahead.is(TokenType.INT) && lookahead(1).is(TokenType.MINUS)) {
+        } else if (first.is(TokenType.INT) && second.is(TokenType.MINUS)) {
 
+            nextToken();
             EInt eInt = new EInt(Integer.parseInt(lookahead.getData()));
             nextToken();
             Exp exp = parseExp();
             return new EMinus(eInt, exp);
 
-        } else if (lookahead.is(TokenType.INT) && lookahead(1).is(TokenType.DIV)) {
+        } else if (first.is(TokenType.INT) && second.is(TokenType.DIV)) {
 
+            nextToken();
             EInt eInt = new EInt(Integer.parseInt(lookahead.getData()));
             nextToken();
             Exp exp = parseExp();
             return new EDiv(eInt, exp);
 
-        } else if (lookahead.is(TokenType.INT) && lookahead(1).is(TokenType.PROD)) {
+        } else if (first.is(TokenType.INT) && first.is(TokenType.PROD)) {
 
+            nextToken();
             EInt eInt = new EInt(Integer.parseInt(lookahead.getData()));
             nextToken();
             Exp exp = parseExp();
             return new ETimes(eInt, exp);
 
-        } else if (lookahead.is(TokenType.INT) && lookahead(1).is(TokenType.INCREMENT)) {
+        } else if (first.is(TokenType.INT) && second.is(TokenType.INCREMENT)) {
 
+            nextToken();
             EInt eInt = new EInt(Integer.parseInt(lookahead.getData()));
             nextToken();
             return new EIncr(eInt);
 
-        } else if (lookahead.is(TokenType.INT) && lookahead(1).is(TokenType.DECREMENT)) {
+        } else if (first.is(TokenType.INT) && second.is(TokenType.DECREMENT)) {
 
+            nextToken();
             EInt eInt = new EInt(Integer.parseInt(lookahead.getData()));
             nextToken();
             return new EDecr(eInt);
 
-        } else if (lookahead.is(TokenType.FLOAT) && lookahead(1).is(TokenType.PLUS)) {
+        } else if (first.is(TokenType.FLOAT) && second.is(TokenType.PLUS)) {
 
+            nextToken();
             EDouble eDouble = new EDouble(Double.parseDouble(lookahead.getData()));
             nextToken();
             Exp exp = parseExp();
             return new EPlus(eDouble, exp);
 
-        } else if (lookahead.is(TokenType.FLOAT) && lookahead(1).is(TokenType.MINUS)) {
+        } else if (first.is(TokenType.FLOAT) && second.is(TokenType.MINUS)) {
 
+            nextToken();
             EDouble eDouble = new EDouble(Double.parseDouble(lookahead.getData()));
             nextToken();
             Exp exp = parseExp();
             return new EMinus(eDouble, exp);
 
-        } else if (lookahead.is(TokenType.FLOAT) && lookahead(1).is(TokenType.DIV)) {
+        } else if (first.is(TokenType.FLOAT) && second.is(TokenType.DIV)) {
 
+            nextToken();
             EDouble eDouble = new EDouble(Double.parseDouble(lookahead.getData()));
             nextToken();
             Exp exp = parseExp();
             return new EDiv(eDouble, exp);
 
-        } else if (lookahead.is(TokenType.FLOAT) && lookahead(1).is(TokenType.PROD)) {
+        } else if (first.is(TokenType.FLOAT) && second.is(TokenType.PROD)) {
 
+            nextToken();
             EDouble eDouble = new EDouble(Double.parseDouble(lookahead.getData()));
             nextToken();
             Exp exp = parseExp();
             return new ETimes(eDouble, exp);
 
-        } else if (lookahead.is(TokenType.FLOAT) && lookahead(1).is(TokenType.INCREMENT)) {
+        } else if (first.is(TokenType.FLOAT) && second.is(TokenType.INCREMENT)) {
 
+            nextToken();
             EDouble eDouble = new EDouble(Double.parseDouble(lookahead.getData()));
             nextToken();
             return new EIncr(eDouble);
 
-        } else if (lookahead.is(TokenType.FLOAT) && lookahead(1).is(TokenType.DECREMENT)) {
+        } else if (first.is(TokenType.FLOAT) && second.is(TokenType.DECREMENT)) {
 
+            nextToken();
             EDouble eDouble = new EDouble(Double.parseDouble(lookahead.getData()));
             nextToken();
             return new EDecr(eDouble);
 
-        } else if (lookahead.is(TokenType.FLOAT)) {
+        } else if (first.is(TokenType.FLOAT)) {
 
+            nextToken();
             return new EDouble(Double.parseDouble(lookahead.getData()));
 
-        } else if (lookahead.is(TokenType.INT)) {
+        } else if (first.is(TokenType.INT)) {
 
+            nextToken();
             return new EInt(Integer.parseInt(lookahead.getData()));
 
         } else {
@@ -286,17 +304,20 @@ public class Parser implements ParserInterface {
      */
     public Stm parseStm() throws Exception {
 
-        nextToken();
+        Token first = lookahead(1);
+        Token second = lookahead(2);
 
-        if (lookahead.is(TokenType.RETURN)) {
+        if (first.is(TokenType.RETURN)) {
 
+            nextToken();
             Exp exp = parseExp();
             expect(TokenType.SEMICOLON);
 
             return new SReturn(exp);
 
-        } else if (lookahead.is(TokenType.IF)) {
+        } else if (first.is(TokenType.IF)) {
 
+            nextToken();
             expect(TokenType.BRASTART);
             Exp condition = parseExp();
             expect(TokenType.BRAEND);
@@ -310,8 +331,9 @@ public class Parser implements ParserInterface {
 
             return new SIfElse(condition, stmIf, stmElse);
 
-        } else if (lookahead.is(TokenType.WHILE)) {
+        } else if (first.is(TokenType.WHILE)) {
 
+            nextToken();
             expect(TokenType.BRASTART);
             Exp condition = parseExp();
             expect(TokenType.BRAEND);
@@ -322,8 +344,9 @@ public class Parser implements ParserInterface {
             return new SWhile(condition, stmts);
 
 
-        } else if (lookahead.is(TokenType.TYPEINT) && lookahead(1).is(TokenType.IDENT)) {
+        } else if (first.is(TokenType.TYPEINT) && second.is(TokenType.IDENT)) {
 
+            nextToken();
             TypeInt typeInt = new TypeInt();
             nextToken();
             String varName = lookahead.getData();
@@ -334,8 +357,9 @@ public class Parser implements ParserInterface {
             return new SInit(typeInt, varName, exp);
 
 
-        } else if (lookahead.is(TokenType.TYPEBOOL) && lookahead(1).is(TokenType.IDENT)) {
+        } else if (first.is(TokenType.TYPEBOOL) && second.is(TokenType.IDENT)) {
 
+            nextToken();
             TypeBool typeBool = new TypeBool();
             nextToken();
             String varName = lookahead.getData();
@@ -346,8 +370,9 @@ public class Parser implements ParserInterface {
             return new SInit(typeBool, varName, exp);
 
 
-        } else if (lookahead.is(TokenType.TYPEFLOAT) && lookahead(1).is(TokenType.IDENT)) {
+        } else if (first.is(TokenType.TYPEFLOAT) && second.is(TokenType.IDENT)) {
 
+            nextToken();
             TypeDouble typeDouble = new TypeDouble();
             nextToken();
             String varName = lookahead.getData();
@@ -358,8 +383,9 @@ public class Parser implements ParserInterface {
             return new SInit(typeDouble, varName, exp);
 
 
-        } else if (lookahead.is(TokenType.TYPESTRING) && lookahead(1).is(TokenType.IDENT)) {
+        } else if (first.is(TokenType.TYPESTRING) && second.is(TokenType.IDENT)) {
 
+            nextToken();
             TypeString typeString = new TypeString();
             nextToken();
             String varName = lookahead.getData();
@@ -369,7 +395,9 @@ public class Parser implements ParserInterface {
 
             return new SInit(typeString, varName, exp);
 
-        } else if (lookahead.is(TokenType.IDENT)) {
+        } else if (first.is(TokenType.IDENT)) {
+
+            nextToken();
 
             String varName = lookahead.getData();
 
