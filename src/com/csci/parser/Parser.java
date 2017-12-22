@@ -127,6 +127,48 @@ public class Parser implements ParserInterface {
 
             return new DFun(typeInt, functionName, listArg, listStm);
 
+        } else if (lookahead.is(TokenType.TYPEBOOL)) {
+
+            Type typeBool = new TypeBool();
+            expect(TokenType.IDENT);
+            String functionName = lookahead.getData();
+            expect(TokenType.BRASTART);
+            ListArg listArg = parseListArg();
+            expect(TokenType.BRAEND);
+            expect(TokenType.SCOPESTART);
+            ListStm listStm = parseListStm();
+            expect(TokenType.SCOPEEND);
+
+            return new DFun(typeBool, functionName, listArg, listStm);
+
+        } else if (lookahead.is(TokenType.TYPESTRING)) {
+
+            Type typeString = new TypeString();
+            expect(TokenType.IDENT);
+            String functionName = lookahead.getData();
+            expect(TokenType.BRASTART);
+            ListArg listArg = parseListArg();
+            expect(TokenType.BRAEND);
+            expect(TokenType.SCOPESTART);
+            ListStm listStm = parseListStm();
+            expect(TokenType.SCOPEEND);
+
+            return new DFun(typeString, functionName, listArg, listStm);
+
+        } else if (lookahead.is(TokenType.TYPEVOID)) {
+
+            Type typeVoid = new TypeVoid();
+            expect(TokenType.IDENT);
+            String functionName = lookahead.getData();
+            expect(TokenType.BRASTART);
+            ListArg listArg = parseListArg();
+            expect(TokenType.BRAEND);
+            expect(TokenType.SCOPESTART);
+            ListStm listStm = parseListStm();
+            expect(TokenType.SCOPEEND);
+
+            return new DFun(typeVoid, functionName, listArg, listStm);
+
         }
 
         return null;
@@ -165,11 +207,6 @@ public class Parser implements ParserInterface {
 
         Token first = lookahead(1);
         Token second = lookahead(2);
-
-        System.out.println(lookahead);
-        System.out.println(first);
-        System.out.println(second);
-        System.out.println("=================");
 
         if (first.is(TokenType.IDENT) && second.is(TokenType.PLUS)) {
 
