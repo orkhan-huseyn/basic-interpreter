@@ -14,7 +14,7 @@ public class TypeString extends Type {
     }
 
     @Override
-    public Object eval(EvalVisitor visitor) {
+    public Object eval(EvalVisitor visitor) throws Exception {
         return visitor.visit(this);
     }
 

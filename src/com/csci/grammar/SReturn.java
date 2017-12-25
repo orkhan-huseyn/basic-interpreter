@@ -18,7 +18,7 @@ public class SReturn extends Stm implements Visitable {
     }
 
     @Override
-    public Object eval(EvalVisitor visitor) {
+    public Object eval(EvalVisitor visitor) throws Exception {
         return visitor.visit(this);
     }
 }

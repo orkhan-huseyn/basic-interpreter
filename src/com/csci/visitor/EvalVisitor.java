@@ -5,80 +5,80 @@ import com.csci.grammar.*;
 
 public interface EvalVisitor {
 
-    Object visit(PDefs pDefs);
+    Object visit(PDefs pDefs) throws Exception;
 
-    Object visit(DFun dFun);
+    Object visit(DFun dFun) throws Exception;
 
-    Object visit(SReturn sReturn);
+    Object visit(SReturn sReturn) throws Exception;
 
-    Object visit(SDecls sDecls);
+    Object visit(SDecls sDecls) throws Exception;
 
-    Object visit(ADecl aDecl);
+    Object visit(ADecl aDecl) throws Exception;
 
-    Object visit(SInit sInit);
+    Object visit(SInit sInit) throws Exception;
 
-    Object visit(SExp sExp);
+    Object visit(SExp sExp) throws Exception;
 
-    Object visit(SIfElse sIfElse);
+    Object visit(SIfElse sIfElse) throws Exception;
 
-    Object visit(SWhile sWhile);
+    Object visit(SWhile sWhile) throws Exception;
 
-    Object visit(EId eId);
+    Object visit(EId eId) throws Exception;
 
-    Object visit(EIncr eIncr);
+    Object visit(EIncr eIncr) throws Exception;
 
-    Object visit(EPIncr epIncr);
+    Object visit(EPIncr epIncr) throws Exception;
 
-    Object visit(EDecr eDecr);
+    Object visit(EDecr eDecr) throws Exception;
 
-    Object visit(EPDecr epDecr);
+    Object visit(EPDecr epDecr) throws Exception;
 
-    Object visit(EInt eInt);
+    Object visit(EInt eInt) throws Exception;
 
-    Object visit(ETrue eTrue);
+    Object visit(ETrue eTrue) throws Exception;
 
-    Object visit(EFalse eFalse);
+    Object visit(EFalse eFalse) throws Exception;
 
-    Object visit(EDouble eDouble);
+    Object visit(EDouble eDouble) throws Exception;
 
-    Object visit(EString eString);
+    Object visit(EString eString) throws Exception;
 
-    Object visit(EEq eEq);
+    Object visit(EEq eEq) throws Exception;
 
-    Object visit(ENEq enEq);
+    Object visit(ENEq enEq) throws Exception;
 
-    Object visit(EGt eGt);
+    Object visit(EGt eGt) throws Exception;
 
-    Object visit(EGtEq eGtEq);
+    Object visit(EGtEq eGtEq) throws Exception;
 
-    Object visit(ELt eLt);
+    Object visit(ELt eLt) throws Exception;
 
-    Object visit(ELtEq eLtEq);
+    Object visit(ELtEq eLtEq) throws Exception;
 
-    Object visit(EAnd eAnd);
+    Object visit(EAnd eAnd) throws Exception;
 
-    Object visit(EOr eOr);
+    Object visit(EOr eOr) throws Exception;
 
-    Object visit(EApp eApp);
+    Object visit(EApp eApp) throws Exception;
 
-    Object visit(EAss eAss);
+    Object visit(EAss eAss) throws Exception;
 
-    Object visit(EPlus ePlus);
+    Object visit(EPlus ePlus) throws Exception;
 
-    Object visit(EMinus eMinus);
+    Object visit(EMinus eMinus) throws Exception;
 
-    Object visit(EDiv eDiv);
+    Object visit(EDiv eDiv) throws Exception;
 
-    Object visit(ETimes eTimes);
+    Object visit(ETimes eTimes) throws Exception;
 
-    Object visit(TypeBool typeBool);
+    Object visit(TypeBool typeBool) throws Exception;
 
-    Object visit(TypeInt typeInt);
+    Object visit(TypeInt typeInt) throws Exception;
 
-    Object visit(TypeDouble typeDouble);
+    Object visit(TypeDouble typeDouble) throws Exception;
 
-    Object visit(TypeString typeString);
+    Object visit(TypeString typeString) throws Exception;
 
-    Object visit(TypeVoid typeVoid);
+    Object visit(TypeVoid typeVoid) throws Exception;
 
 }
