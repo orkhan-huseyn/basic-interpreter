@@ -77,7 +77,11 @@ public class Evaluator implements EvalVisitor {
 
     @Override
     public Object visit(EId eId) {
-        return GLOBAL_SCOPE.get(eId.id_);
+        if (GLOBAL_SCOPE.containsKey(eId.id_)) {
+            return GLOBAL_SCOPE.get(eId.id_);
+        }
+        System.out.println("Eval error: Variable " + eId.id_ + " does not exist");
+        return null;
     }
 
     @Override
@@ -198,17 +202,65 @@ public class Evaluator implements EvalVisitor {
 
     @Override
     public Object visit(EMinus eMinus) {
-        return null;
+
+        Object exp1 = eMinus.exp_1.eval(this);
+        Object exp2 = eMinus.exp_2.eval(this);
+
+        if (exp1 instanceof Integer) {
+            exp1 = (Integer)exp1;
+        } else {
+            System.out.println("Invalid type: Integer expected");
+        }
+
+        if (exp2 instanceof Integer) {
+            exp2 = (Integer)exp2;
+        } else {
+            System.out.println("Invalid type: Integer expected");
+        }
+
+        return (Integer)exp1 - (Integer) exp2;
     }
 
     @Override
     public Object visit(EDiv eDiv) {
-        return null;
+
+        Object exp1 = eDiv.exp_1.eval(this);
+        Object exp2 = eDiv.exp_2.eval(this);
+
+        if (exp1 instanceof Integer) {
+            exp1 = (Integer)exp1;
+        } else {
+            System.out.println("Invalid type: Integer expected");
+        }
+
+        if (exp2 instanceof Integer) {
+            exp2 = (Integer)exp2;
+        } else {
+            System.out.println("Invalid type: Integer expected");
+        }
+
+        return (Integer)exp1 / (Integer) exp2;
     }
 
     @Override
     public Object visit(ETimes eTimes) {
-        return null;
+
+        Object exp1 = eTimes.exp_1.eval(this);
+        Object exp2 = eTimes.exp_2.eval(this);
+
+        if (exp1 instanceof Integer) {
+            exp1 = (Integer)exp1;
+        } else {
+            System.out.println("Invalid type: Integer expected");
+        }
+
+        if (exp2 instanceof Integer) {
+            exp2 = (Integer)exp2;
+        } else {
+            System.out.println("Invalid type: Integer expected");
+        }
+
+        return (Integer)exp1 * (Integer) exp2;
     }
 
     @Override
