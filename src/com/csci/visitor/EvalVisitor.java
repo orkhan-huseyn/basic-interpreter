@@ -5,80 +5,80 @@ import com.csci.grammar.*;
 
 public interface EvalVisitor {
 
-    void visit(PDefs pDefs);
+    Object visit(PDefs pDefs);
 
-    void visit(DFun dFun);
+    Object visit(DFun dFun);
 
-    void visit(SReturn sReturn);
+    Object visit(SReturn sReturn);
 
-    void visit(SDecls sDecls);
+    Object visit(SDecls sDecls);
 
-    void visit(ADecl aDecl);
+    Object visit(ADecl aDecl);
 
-    void visit(SInit sInit);
+    Object visit(SInit sInit);
 
-    void visit(SExp sExp);
+    Object visit(SExp sExp);
 
-    void visit(SIfElse sIfElse);
+    Object visit(SIfElse sIfElse);
 
-    void visit(SWhile sWhile);
+    Object visit(SWhile sWhile);
 
-    void visit(EId eId);
+    Object visit(EId eId);
 
-    void visit(EIncr eIncr);
+    Object visit(EIncr eIncr);
 
-    void visit(EPIncr epIncr);
+    Object visit(EPIncr epIncr);
 
-    void visit(EDecr eDecr);
+    Object visit(EDecr eDecr);
 
-    void visit(EPDecr epDecr);
+    Object visit(EPDecr epDecr);
 
-    void visit(EInt eInt);
+    Object visit(EInt eInt);
 
-    void visit(ETrue eTrue);
+    Object visit(ETrue eTrue);
 
-    void visit(EFalse eFalse);
+    Object visit(EFalse eFalse);
 
-    void visit(EDouble eDouble);
+    Object visit(EDouble eDouble);
 
-    void visit(EString eString);
+    Object visit(EString eString);
 
-    void visit(EEq eEq);
+    Object visit(EEq eEq);
 
-    void visit(ENEq enEq);
+    Object visit(ENEq enEq);
 
-    void visit(EGt eGt);
+    Object visit(EGt eGt);
 
-    void visit(EGtEq eGtEq);
+    Object visit(EGtEq eGtEq);
 
-    void visit(ELt eLt);
+    Object visit(ELt eLt);
 
-    void visit(ELtEq eLtEq);
+    Object visit(ELtEq eLtEq);
 
-    void visit(EAnd eAnd);
+    Object visit(EAnd eAnd);
 
-    void visit(EOr eOr);
+    Object visit(EOr eOr);
 
-    void visit(EApp eApp);
+    Object visit(EApp eApp);
 
-    void visit(EAss eAss);
+    Object visit(EAss eAss);
 
-    void visit(EPlus ePlus);
+    Object visit(EPlus ePlus);
 
-    void visit(EMinus eMinus);
+    Object visit(EMinus eMinus);
 
-    void visit(EDiv eDiv);
+    Object visit(EDiv eDiv);
 
-    void visit(ETimes eTimes);
+    Object visit(ETimes eTimes);
 
-    void visit(TypeBool typeBool);
+    Object visit(TypeBool typeBool);
 
-    void visit(TypeInt typeInt);
+    Object visit(TypeInt typeInt);
 
-    void visit(TypeDouble typeDouble);
+    Object visit(TypeDouble typeDouble);
 
-    void visit(TypeString typeString);
+    Object visit(TypeString typeString);
 
-    void visit(TypeVoid typeVoid);
+    Object visit(TypeVoid typeVoid);
 
 }

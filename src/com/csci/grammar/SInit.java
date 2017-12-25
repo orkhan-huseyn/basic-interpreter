@@ -21,7 +21,7 @@ public class SInit extends Stm {
     }
 
     @Override
-    public void eval(EvalVisitor visitor) {
-        visitor.visit(this);
+    public Object eval(EvalVisitor visitor) {
+        return visitor.visit(this);
     }
 }

@@ -4,6 +4,6 @@ public interface Visitable {
 
     String accept(PrintVisitor visitor);
 
-    void eval(EvalVisitor visitor);
+    Object eval(EvalVisitor visitor);
 
 }

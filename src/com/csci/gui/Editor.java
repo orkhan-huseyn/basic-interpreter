@@ -18,6 +18,7 @@ import com.csci.lexer.Token;
 import com.csci.lexer.TokenType;
 import com.csci.parser.Parser;
 import com.csci.grammar.Program;
+import com.csci.visitor.Evaluator;
 import com.csci.visitor.Printer;
 
 
@@ -96,8 +97,42 @@ public class Editor {
 
         toolBar.add(btnParse);
 
-        JButton btnRun = new JButton("Execute");
-        toolBar.add(btnRun);
+        JButton btnEval = new JButton("Evaluate");
+
+        btnEval.addActionListener( e -> {
+
+            String input = editor.getText();
+
+            if (input != null && !input.isEmpty()) {
+
+                LinkedList<Token> tokenList = lexer.lex(input);
+
+                Parser parser = new Parser(tokenList);
+
+                Evaluator evaluator = new Evaluator();
+
+                try {
+
+                    Program program = parser.parseProgram();
+
+                    Object evaluted = evaluator.visit((PDefs) program);
+
+                    System.out.println(evaluator.GLOBAL_SCOPE);
+
+                    console.setText(evaluted.toString());
+
+                } catch (Exception ex) {
+                    console.setText(ex.toString());
+                }
+            } else {
+
+                console.setText("Nothing to evaluate!");
+
+            }
+
+        });
+
+        toolBar.add(btnEval);
 
         JSplitPane splitPane = new JSplitPane();
         splitPane.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));

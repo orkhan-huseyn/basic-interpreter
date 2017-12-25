@@ -7,203 +7,232 @@ import java.util.Map;
 
 public class Evaluator implements EvalVisitor {
 
-    Map<String, String> GLOBAL_SCOPE;
+    public Map<String, Object> GLOBAL_SCOPE;
 
     public Evaluator() {
         GLOBAL_SCOPE = new HashMap<>();
     }
 
     @Override
-    public void visit(PDefs pDefs) {
+    public Object visit(PDefs pDefs) {
+
+        Object res = null;
+
         for (Def def : pDefs.listdef_) {
-            def.eval(this);
+            res = def.eval(this);
         }
+
+        return res;
     }
 
     @Override
-    public void visit(DFun dFun) {
+    public Object visit(DFun dFun) {
+
+        Object res = null;
+
         for (Stm stm : dFun.liststm_) {
-            stm.eval(this);
+            res = stm.eval(this);
         }
+
+        return res;
     }
 
     @Override
-    public void visit(SReturn sReturn) {
-
+    public Object visit(SReturn sReturn) {
+        return sReturn.exp_.eval(this);
     }
 
     @Override
-    public void visit(SDecls sDecls) {
-
+    public Object visit(SDecls sDecls) {
+        return null;
     }
 
     @Override
-    public void visit(ADecl aDecl) {
-
+    public Object visit(ADecl aDecl) {
+        return null;
     }
 
     @Override
-    public void visit(SInit sInit) {
-
+    public Object visit(SInit sInit) {
+        String variable = sInit.id_;
+        Object value = sInit.exp_.eval(this);
+        GLOBAL_SCOPE.put(variable, value);
+        return null;
     }
 
     @Override
-    public void visit(SExp sExp) {
-
+    public Object visit(SExp sExp) {
+        return null;
     }
 
     @Override
-    public void visit(SIfElse sIfElse) {
-
+    public Object visit(SIfElse sIfElse) {
+        return null;
     }
 
     @Override
-    public void visit(SWhile sWhile) {
-
+    public Object visit(SWhile sWhile) {
+        return null;
     }
 
     @Override
-    public void visit(EId eId) {
-
+    public Object visit(EId eId) {
+        return GLOBAL_SCOPE.get(eId.id_);
     }
 
     @Override
-    public void visit(EIncr eIncr) {
-
+    public Object visit(EIncr eIncr) {
+        return null;
     }
 
     @Override
-    public void visit(EPIncr epIncr) {
-
+    public Object visit(EPIncr epIncr) {
+        return null;
     }
 
     @Override
-    public void visit(EDecr eDecr) {
-
+    public Object visit(EDecr eDecr) {
+        return null;
     }
 
     @Override
-    public void visit(EPDecr epDecr) {
-
+    public Object visit(EPDecr epDecr) {
+        return null;
     }
 
     @Override
-    public void visit(EInt eInt) {
-
+    public Object visit(EInt eInt) {
+        return eInt.integer_;
     }
 
     @Override
-    public void visit(ETrue eTrue) {
-
+    public Object visit(ETrue eTrue) {
+        return true;
     }
 
     @Override
-    public void visit(EFalse eFalse) {
-
+    public Object visit(EFalse eFalse) {
+        return false;
     }
 
     @Override
-    public void visit(EDouble eDouble) {
-
+    public Object visit(EDouble eDouble) {
+        return eDouble.double_;
     }
 
     @Override
-    public void visit(EString eString) {
-
+    public Object visit(EString eString) {
+        return eString.string_;
     }
 
     @Override
-    public void visit(EEq eEq) {
-
+    public Object visit(EEq eEq) {
+        return null;
     }
 
     @Override
-    public void visit(ENEq enEq) {
-
+    public Object visit(ENEq enEq) {
+        return null;
     }
 
     @Override
-    public void visit(EGt eGt) {
-
+    public Object visit(EGt eGt) {
+        return null;
     }
 
     @Override
-    public void visit(EGtEq eGtEq) {
-
+    public Object visit(EGtEq eGtEq) {
+        return null;
     }
 
     @Override
-    public void visit(ELt eLt) {
-
+    public Object visit(ELt eLt) {
+        return null;
     }
 
     @Override
-    public void visit(ELtEq eLtEq) {
-
+    public Object visit(ELtEq eLtEq) {
+        return null;
     }
 
     @Override
-    public void visit(EAnd eAnd) {
-
+    public Object visit(EAnd eAnd) {
+        return null;
     }
 
     @Override
-    public void visit(EOr eOr) {
-
+    public Object visit(EOr eOr) {
+        return null;
     }
 
     @Override
-    public void visit(EApp eApp) {
-
+    public Object visit(EApp eApp) {
+        return null;
     }
 
     @Override
-    public void visit(EAss eAss) {
-
+    public Object visit(EAss eAss) {
+        return null;
     }
 
     @Override
-    public void visit(EPlus ePlus) {
+    public Object visit(EPlus ePlus) {
 
+        Object exp1 = ePlus.exp_1.eval(this);
+        Object exp2 = ePlus.exp_2.eval(this);
+
+        if (exp1 instanceof Integer) {
+            exp1 = (Integer)exp1;
+        } else {
+            System.out.println("Invalid type: Integer expected");
+        }
+
+        if (exp2 instanceof Integer) {
+            exp2 = (Integer)exp2;
+        } else {
+            System.out.println("Invalid type: Integer expected");
+        }
+
+        return (Integer)exp1 + (Integer) exp2;
     }
 
     @Override
-    public void visit(EMinus eMinus) {
-
+    public Object visit(EMinus eMinus) {
+        return null;
     }
 
     @Override
-    public void visit(EDiv eDiv) {
-
+    public Object visit(EDiv eDiv) {
+        return null;
     }
 
     @Override
-    public void visit(ETimes eTimes) {
-
+    public Object visit(ETimes eTimes) {
+        return null;
     }
 
     @Override
-    public void visit(TypeBool typeBool) {
-
+    public Object visit(TypeBool typeBool) {
+        return null;
     }
 
     @Override
-    public void visit(TypeInt typeInt) {
-
+    public Object visit(TypeInt typeInt) {
+        return null;
     }
 
     @Override
-    public void visit(TypeDouble typeDouble) {
-
+    public Object visit(TypeDouble typeDouble) {
+        return null;
     }
 
     @Override
-    public void visit(TypeString typeString) {
-
+    public Object visit(TypeString typeString) {
+        return null;
     }
 
     @Override
-    public void visit(TypeVoid typeVoid) {
-
+    public Object visit(TypeVoid typeVoid) {
+        return null;
     }
 }

@@ -18,8 +18,8 @@ public class EGtEq extends Exp {
     }
 
     @Override
-    public void eval(EvalVisitor visitor) {
-        visitor.visit(this);
+    public Object eval(EvalVisitor visitor) {
+        return visitor.visit(this);
     }
 
 }
