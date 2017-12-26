@@ -165,32 +165,32 @@ public class Evaluator implements EvalVisitor {
 
     @Override
     public Object visit(EEq eEq) throws Exception {
-        return null;
+        return eEq.exp_1.eval(this) == eEq.exp_2.eval(this);
     }
 
     @Override
     public Object visit(ENEq enEq) throws Exception {
-        return null;
+        return enEq.exp_1.eval(this) != enEq.exp_2.eval(this);
     }
 
     @Override
     public Object visit(EGt eGt) throws Exception {
-        return null;
+        return (Integer)eGt.exp_1.eval(this) > (Integer)eGt.exp_2.eval(this);
     }
 
     @Override
     public Object visit(EGtEq eGtEq) throws Exception {
-        return null;
+        return (Integer)eGtEq.exp_1.eval(this) >= (Integer)eGtEq.exp_2.eval(this);
     }
 
     @Override
     public Object visit(ELt eLt) throws Exception {
-        return null;
+        return (Integer)eLt.exp_1.eval(this) < (Integer)eLt.exp_2.eval(this);
     }
 
     @Override
     public Object visit(ELtEq eLtEq) throws Exception {
-        return null;
+        return (Integer)eLtEq.exp_1.eval(this) <= (Integer)eLtEq.exp_2.eval(this);
     }
 
     @Override
