@@ -208,7 +208,115 @@ public class Parser implements ParserInterface {
         Token first = lookahead(1);
         Token second = lookahead(2);
 
-        if (first.is(TokenType.IDENT) && second.is(TokenType.PLUS)) {
+        if (first.is(TokenType.IDENT) && second.is(TokenType.GREATER)) {
+
+            nextToken();
+            EId eId = new EId(lookahead.getData());
+            nextToken();
+            Exp exp2 = parseExp();
+
+            return new EGt(eId, exp2);
+
+        } else if (first.is(TokenType.IDENT) && second.is(TokenType.GREATEROREQUALS)) {
+
+            nextToken();
+            EId eId = new EId(lookahead.getData());
+            nextToken();
+            Exp exp2 = parseExp();
+
+            return new EGtEq(eId, exp2);
+
+        } else if (first.is(TokenType.IDENT) && second.is(TokenType.LESS)) {
+
+            nextToken();
+            EId eId = new EId(lookahead.getData());
+            nextToken();
+            Exp exp2 = parseExp();
+
+            return new ELt(eId, exp2);
+
+        } else if (first.is(TokenType.IDENT) && second.is(TokenType.LESSOREQUALS)) {
+
+            nextToken();
+            EId eId = new EId(lookahead.getData());
+            nextToken();
+            Exp exp2 = parseExp();
+
+            return new ELtEq(eId, exp2);
+
+        } else if (first.is(TokenType.IDENT) && second.is(TokenType.EQUALS)) {
+
+            nextToken();
+            EId eId = new EId(lookahead.getData());
+            nextToken();
+            Exp exp2 = parseExp();
+
+            return new EEq(eId, exp2);
+
+        } else if (first.is(TokenType.IDENT) && second.is(TokenType.NOTEQUAL)) {
+
+            nextToken();
+            EId eId = new EId(lookahead.getData());
+            nextToken();
+            Exp exp2 = parseExp();
+
+            return new ENEq(eId, exp2);
+
+        } else if (first.is(TokenType.INT) && second.is(TokenType.GREATER)) {
+
+            nextToken();
+            EInt eInt = new EInt(Integer.parseInt(lookahead.getData()));
+            nextToken();
+            Exp exp2 = parseExp();
+
+            return new EGt(eInt, exp2);
+
+        } else if (first.is(TokenType.INT) && second.is(TokenType.GREATEROREQUALS)) {
+
+            nextToken();
+            EInt eInt = new EInt(Integer.parseInt(lookahead.getData()));
+            nextToken();
+            Exp exp2 = parseExp();
+
+            return new EGtEq(eInt, exp2);
+
+        } else if (first.is(TokenType.INT) && second.is(TokenType.LESS)) {
+
+            nextToken();
+            EInt eInt = new EInt(Integer.parseInt(lookahead.getData()));
+            nextToken();
+            Exp exp2 = parseExp();
+
+            return new ELt(eInt, exp2);
+
+        } else if (first.is(TokenType.INT) && second.is(TokenType.LESSOREQUALS)) {
+
+            nextToken();
+            EInt eInt = new EInt(Integer.parseInt(lookahead.getData()));
+            nextToken();
+            Exp exp2 = parseExp();
+
+            return new ELtEq(eInt, exp2);
+
+        } else if (first.is(TokenType.INT) && second.is(TokenType.EQUALS)) {
+
+            nextToken();
+            EInt eInt = new EInt(Integer.parseInt(lookahead.getData()));
+            nextToken();
+            Exp exp2 = parseExp();
+
+            return new EEq(eInt, exp2);
+
+        } else if (first.is(TokenType.INT) && second.is(TokenType.NOTEQUAL)) {
+
+            nextToken();
+            EInt eInt = new EInt(Integer.parseInt(lookahead.getData()));
+            nextToken();
+            Exp exp2 = parseExp();
+
+            return new ENEq(eInt, exp2);
+
+        } else if (first.is(TokenType.IDENT) && second.is(TokenType.PLUS)) {
 
             nextToken();
             EId eId = new EId(lookahead.getData());
@@ -399,9 +507,9 @@ public class Parser implements ParserInterface {
      */
     public Stm parseStm() throws Exception {
 
-        Token first  = lookahead(1);
+        Token first = lookahead(1);
         Token second = lookahead(2);
-        Token third  = lookahead(3);
+        Token third = lookahead(3);
 
         if (first.is(TokenType.RETURN)) {
 
@@ -534,7 +642,7 @@ public class Parser implements ParserInterface {
 
             return new SDecls(typeString, varName);
 
-        }  else if (first.is(TokenType.IDENT) && second.is(TokenType.ASSIGNMENT)) {
+        } else if (first.is(TokenType.IDENT) && second.is(TokenType.ASSIGNMENT)) {
 
             nextToken();
             String varName = lookahead.getData();

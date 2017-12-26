@@ -28,16 +28,8 @@ public class Token {
         return data;
     }
 
-    public void setData(String data) {
-        this.data = data;
-    }
-
     public Integer getPosition() {
         return position;
-    }
-
-    public void setPosition(Integer position) {
-        this.position = position;
     }
 
     @Override

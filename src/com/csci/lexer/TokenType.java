@@ -28,6 +28,7 @@ public enum TokenType {
     GREATER(">"),
     LESS("<"),
     EQUALS("=="),
+    NOTEQUAL("!="),
     AND("\\&\\&"),
     OR("\\|\\|"),
     ASSIGNMENT("="),
@@ -40,6 +41,8 @@ public enum TokenType {
     TYPECHAR("char"),
     TYPEBOOL("bool"),
     TYPEVOID("void"),
+    TRUE("true"),
+    FALSE("false"),
     // keywords
     FOR("for"),
     WHILE("while"),

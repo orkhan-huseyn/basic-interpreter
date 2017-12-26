@@ -120,7 +120,7 @@ public class Printer implements PrintVisitor {
 
     @Override
     public String visit(EIncr eIncr) {
-        return null;
+        return "EIncr: " + eIncr.exp_.accept(this);
     }
 
     @Override
@@ -130,7 +130,7 @@ public class Printer implements PrintVisitor {
 
     @Override
     public String visit(EDecr eDecr) {
-        return null;
+        return "EDecr: " + eDecr.exp_.accept(this);
     }
 
     @Override
@@ -165,42 +165,90 @@ public class Printer implements PrintVisitor {
 
     @Override
     public String visit(EEq eEq) {
-        return null;
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("EEq: ");
+        builder.append(eEq.exp_1.accept(this));
+        builder.append(eEq.exp_2.accept(this));
+
+        return builder.toString();
     }
 
     @Override
     public String visit(ENEq enEq) {
-        return null;
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("ENeq: ");
+        builder.append(enEq.exp_1.accept(this));
+        builder.append(enEq.exp_2.accept(this));
+
+        return builder.toString();
     }
 
     @Override
     public String visit(EGt eGt) {
-        return null;
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("EGt: ");
+        builder.append(eGt.exp_1.accept(this));
+        builder.append(eGt.exp_2.accept(this));
+
+        return builder.toString();
     }
 
     @Override
     public String visit(EGtEq eGtEq) {
-        return null;
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("EGtEq: ");
+        builder.append(eGtEq.exp_1.accept(this));
+        builder.append(eGtEq.exp_2.accept(this));
+
+        return builder.toString();
     }
 
     @Override
     public String visit(ELt eLt) {
-        return null;
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("ELt: ");
+        builder.append(eLt.exp_1.accept(this));
+        builder.append(eLt.exp_2.accept(this));
+
+        return builder.toString();
     }
 
     @Override
     public String visit(ELtEq eLtEq) {
-        return null;
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("EltEq: ");
+        builder.append(eLtEq.exp_1.accept(this));
+        builder.append(eLtEq.exp_2.accept(this));
+
+        return builder.toString();
     }
 
     @Override
     public String visit(EAnd eAnd) {
-        return null;
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("EAnd: ");
+        builder.append(eAnd.exp_1.accept(this));
+        builder.append(eAnd.exp_2.accept(this));
+
+        return builder.toString();
     }
 
     @Override
     public String visit(EOr eOr) {
-        return null;
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("EOr: ");
+        builder.append(eOr.exp_1.accept(this));
+        builder.append(eOr.exp_2.accept(this));
+
+        return builder.toString();
     }
 
     @Override
