@@ -45,7 +45,7 @@ public class Printer implements PrintVisitor {
 
     @Override
     public String visit(SDecls sDecls) {
-        return null;
+        return "SDecls: " + sDecls.id_;
     }
 
     @Override
@@ -61,6 +61,17 @@ public class Printer implements PrintVisitor {
         builder.append("SInit: ");
         builder.append(sInit.id_);
         builder.append(sInit.exp_.accept(this));
+
+        return builder.toString();
+    }
+
+    @Override
+    public String visit(SAss sAss) {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("SAss: ");
+        builder.append(sAss.id);
+        builder.append(sAss.exp.accept(this));
 
         return builder.toString();
     }

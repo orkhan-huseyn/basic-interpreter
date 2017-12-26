@@ -399,8 +399,9 @@ public class Parser implements ParserInterface {
      */
     public Stm parseStm() throws Exception {
 
-        Token first = lookahead(1);
+        Token first  = lookahead(1);
         Token second = lookahead(2);
+        Token third  = lookahead(3);
 
         if (first.is(TokenType.RETURN)) {
 
@@ -439,56 +440,109 @@ public class Parser implements ParserInterface {
             return new SWhile(condition, stmts);
 
 
-        } else if (first.is(TokenType.TYPEINT) && second.is(TokenType.IDENT)) {
+        } else if (first.is(TokenType.TYPEINT) && second.is(TokenType.IDENT) && third.is(TokenType.ASSIGNMENT)) {
 
             nextToken();
             TypeInt typeInt = new TypeInt();
             nextToken();
             String varName = lookahead.getData();
-            expect(TokenType.ASSIGNMENT);
+            nextToken();
             Exp exp = parseExp();
             expect(TokenType.SEMICOLON);
 
             return new SInit(typeInt, varName, exp);
 
 
-        } else if (first.is(TokenType.TYPEBOOL) && second.is(TokenType.IDENT)) {
+        } else if (first.is(TokenType.TYPEBOOL) && second.is(TokenType.IDENT) && third.is(TokenType.ASSIGNMENT)) {
 
             nextToken();
             TypeBool typeBool = new TypeBool();
             nextToken();
             String varName = lookahead.getData();
-            expect(TokenType.ASSIGNMENT);
+            nextToken();
             Exp exp = parseExp();
             expect(TokenType.SEMICOLON);
 
             return new SInit(typeBool, varName, exp);
 
 
-        } else if (first.is(TokenType.TYPEFLOAT) && second.is(TokenType.IDENT)) {
+        } else if (first.is(TokenType.TYPEFLOAT) && second.is(TokenType.IDENT) && third.is(TokenType.ASSIGNMENT)) {
 
             nextToken();
             TypeDouble typeDouble = new TypeDouble();
             nextToken();
             String varName = lookahead.getData();
-            expect(TokenType.ASSIGNMENT);
+            nextToken();
             Exp exp = parseExp();
             expect(TokenType.SEMICOLON);
 
             return new SInit(typeDouble, varName, exp);
 
 
-        } else if (first.is(TokenType.TYPESTRING) && second.is(TokenType.IDENT)) {
+        } else if (first.is(TokenType.TYPESTRING) && second.is(TokenType.IDENT) && third.is(TokenType.ASSIGNMENT)) {
 
             nextToken();
             TypeString typeString = new TypeString();
             nextToken();
             String varName = lookahead.getData();
-            expect(TokenType.ASSIGNMENT);
+            nextToken();
             Exp exp = parseExp();
             expect(TokenType.SEMICOLON);
 
             return new SInit(typeString, varName, exp);
+
+        } else if (first.is(TokenType.TYPEINT) && second.is(TokenType.IDENT) && third.is(TokenType.SEMICOLON)) {
+
+            nextToken();
+            TypeInt typeInt = new TypeInt();
+            nextToken();
+            String varName = lookahead.getData();
+            nextToken();
+
+            return new SDecls(typeInt, varName);
+
+
+        } else if (first.is(TokenType.TYPEBOOL) && second.is(TokenType.IDENT) && third.is(TokenType.SEMICOLON)) {
+
+            nextToken();
+            TypeBool typeBool = new TypeBool();
+            nextToken();
+            String varName = lookahead.getData();
+            nextToken();
+
+            return new SDecls(typeBool, varName);
+
+
+        } else if (first.is(TokenType.TYPEFLOAT) && second.is(TokenType.IDENT) && third.is(TokenType.SEMICOLON)) {
+
+            nextToken();
+            TypeDouble typeDouble = new TypeDouble();
+            nextToken();
+            String varName = lookahead.getData();
+            nextToken();
+
+            return new SDecls(typeDouble, varName);
+
+
+        } else if (first.is(TokenType.TYPESTRING) && second.is(TokenType.IDENT) && third.is(TokenType.SEMICOLON)) {
+
+            nextToken();
+            TypeString typeString = new TypeString();
+            nextToken();
+            String varName = lookahead.getData();
+            nextToken();
+
+            return new SDecls(typeString, varName);
+
+        }  else if (first.is(TokenType.IDENT) && second.is(TokenType.ASSIGNMENT)) {
+
+            nextToken();
+            String varName = lookahead.getData();
+            nextToken();
+            Exp exp = parseExp();
+            expect(TokenType.SEMICOLON);
+
+            return new SAss(varName, exp);
 
         } else if (first.is(TokenType.IDENT)) {
 

@@ -3,14 +3,14 @@ package com.csci.grammar;
 import com.csci.visitor.EvalVisitor;
 import com.csci.visitor.PrintVisitor;
 
-public class SDecls extends Stm {
+public class SAss extends Stm {
 
-    public Type type_;
-    public String id_;
+    public String id;
+    public Exp exp;
 
-    public SDecls(Type p1, String p2) {
-        type_ = p1;
-        id_ = p2;
+    public SAss(String id, Exp exp) {
+        this.id = id;
+        this.exp = exp;
     }
 
     @Override

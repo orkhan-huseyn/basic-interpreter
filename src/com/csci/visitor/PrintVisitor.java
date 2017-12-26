@@ -17,6 +17,8 @@ public interface PrintVisitor {
 
     String visit(SInit sInit);
 
+    String visit(SAss sAss);
+
     String visit(SExp sExp);
 
     String visit(SIfElse sIfElse);

@@ -44,6 +44,12 @@ public class Evaluator implements EvalVisitor {
 
     @Override
     public Object visit(SDecls sDecls) throws Exception {
+        if (!GLOBAL_SCOPE.containsKey(sDecls.id_)) {
+            String variable = sDecls.id_;
+            GLOBAL_SCOPE.put(variable, null);
+        } else {
+            throw new Exception("Variable " + sDecls.id_ + " already exist in this scope!");
+        }
         return null;
     }
 
@@ -68,6 +74,23 @@ public class Evaluator implements EvalVisitor {
     }
 
     @Override
+    public Object visit(SAss sAss) throws Exception {
+
+        if (GLOBAL_SCOPE.containsKey(sAss.id)) {
+
+            String variable = sAss.id;
+            Object value = sAss.exp.eval(this);
+            GLOBAL_SCOPE.put(variable, value);
+
+        } else {
+            throw new Exception("Variable " + sAss.id + " has not beed declared in this scope!");
+        }
+
+        return null;
+
+    }
+
+    @Override
     public Object visit(SExp sExp) throws Exception {
         return null;
     }
@@ -85,8 +108,10 @@ public class Evaluator implements EvalVisitor {
     @Override
     public Object visit(EId eId) throws Exception {
 
-        if (GLOBAL_SCOPE.containsKey(eId.id_)) {
+        if (GLOBAL_SCOPE.containsKey(eId.id_) && GLOBAL_SCOPE.get(eId.id_) != null) {
             return GLOBAL_SCOPE.get(eId.id_);
+        } else if (GLOBAL_SCOPE.containsKey(eId.id_) && GLOBAL_SCOPE.get(eId.id_) == null) {
+            throw new Exception("Variable " + eId.id_ + " has never been initialized!");
         } else {
             throw new Exception("Variable " + eId.id_ + " does not exist in this scope!");
         }

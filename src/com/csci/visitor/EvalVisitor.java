@@ -17,6 +17,8 @@ public interface EvalVisitor {
 
     Object visit(SInit sInit) throws Exception;
 
+    Object visit(SAss sAss) throws Exception;
+
     Object visit(SExp sExp) throws Exception;
 
     Object visit(SIfElse sIfElse) throws Exception;
