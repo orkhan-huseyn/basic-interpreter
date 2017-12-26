@@ -457,9 +457,12 @@ public class Parser implements ParserInterface {
         } else if (first.is(TokenType.IDENT)) {
 
             nextToken();
-            String varName = lookahead.getData();
+            return new EId(lookahead.getData());
 
-            return new EId(varName);
+        } else if (first.is(TokenType.STRING)) {
+
+            nextToken();
+            return new EString(lookahead.getData());
 
         } else if (first.is(TokenType.FLOAT)) {
 
@@ -654,9 +657,8 @@ public class Parser implements ParserInterface {
 
         } else if (first.is(TokenType.IDENT)) {
 
-            nextToken();
-
             Exp exp = parseExp();
+            expect(TokenType.SEMICOLON);
 
             return new SExp(exp);
 

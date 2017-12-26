@@ -92,17 +92,37 @@ public class Evaluator implements EvalVisitor {
 
     @Override
     public Object visit(SExp sExp) throws Exception {
-        return null;
+        return sExp.exp_.eval(this);
     }
 
     @Override
     public Object visit(SIfElse sIfElse) throws Exception {
-        return null;
+        Object condition = sIfElse.exp_.eval(this);
+        Object res = null;
+        if ((Boolean) condition) {
+            for (Stm stm : sIfElse.stm_1) {
+                res = stm.eval(this);
+            }
+        } else {
+            for (Stm stm : sIfElse.stm_2) {
+                res = stm.eval(this);
+            }
+        }
+        return res;
     }
 
     @Override
     public Object visit(SWhile sWhile) throws Exception {
-        return null;
+        Object condition = sWhile.exp_.eval(this);
+        Object res = null;
+        if ((Boolean) condition) {
+            for (Stm stm : sWhile.stm_) {
+                res = stm.eval(this);
+            }
+            sWhile.eval(this);
+        }
+
+        return res;
     }
 
     @Override
@@ -120,7 +140,15 @@ public class Evaluator implements EvalVisitor {
 
     @Override
     public Object visit(EIncr eIncr) throws Exception {
-        return null;
+        Object value = eIncr.exp_.eval(this);
+        if (!(value instanceof Integer)) {
+            throw new Exception("Type error: Integer expected!");
+        }
+        value = (Integer)value + 1;
+        if (eIncr.exp_ instanceof EId) {
+            GLOBAL_SCOPE.put(((EId) eIncr.exp_).id_, value);
+        }
+        return value;
     }
 
     @Override
@@ -130,7 +158,12 @@ public class Evaluator implements EvalVisitor {
 
     @Override
     public Object visit(EDecr eDecr) throws Exception {
-        return null;
+        Object value = eDecr.exp_.eval(this);
+        if (!(value instanceof Integer)) {
+            throw new Exception("Type error: Integer expected!");
+        }
+        value = (Integer)value - 1;
+        return value;
     }
 
     @Override
@@ -175,22 +208,22 @@ public class Evaluator implements EvalVisitor {
 
     @Override
     public Object visit(EGt eGt) throws Exception {
-        return (Integer)eGt.exp_1.eval(this) > (Integer)eGt.exp_2.eval(this);
+        return (Integer) eGt.exp_1.eval(this) > (Integer) eGt.exp_2.eval(this);
     }
 
     @Override
     public Object visit(EGtEq eGtEq) throws Exception {
-        return (Integer)eGtEq.exp_1.eval(this) >= (Integer)eGtEq.exp_2.eval(this);
+        return (Integer) eGtEq.exp_1.eval(this) >= (Integer) eGtEq.exp_2.eval(this);
     }
 
     @Override
     public Object visit(ELt eLt) throws Exception {
-        return (Integer)eLt.exp_1.eval(this) < (Integer)eLt.exp_2.eval(this);
+        return (Integer) eLt.exp_1.eval(this) < (Integer) eLt.exp_2.eval(this);
     }
 
     @Override
     public Object visit(ELtEq eLtEq) throws Exception {
-        return (Integer)eLtEq.exp_1.eval(this) <= (Integer)eLtEq.exp_2.eval(this);
+        return (Integer) eLtEq.exp_1.eval(this) <= (Integer) eLtEq.exp_2.eval(this);
     }
 
     @Override
@@ -219,15 +252,11 @@ public class Evaluator implements EvalVisitor {
         Object exp1 = ePlus.exp_1.eval(this);
         Object exp2 = ePlus.exp_2.eval(this);
 
-        if (exp1 instanceof Integer) {
-            exp1 = (Integer) exp1;
-        } else {
+        if (!(exp1 instanceof Integer)) {
             throw new Exception("Type error: Integer expected");
         }
 
-        if (exp2 instanceof Integer) {
-            exp2 = (Integer) exp2;
-        } else {
+        if (!(exp2 instanceof Integer)) {
             throw new Exception("Type error: Integer expected");
         }
 
@@ -240,15 +269,11 @@ public class Evaluator implements EvalVisitor {
         Object exp1 = eMinus.exp_1.eval(this);
         Object exp2 = eMinus.exp_2.eval(this);
 
-        if (exp1 instanceof Integer) {
-            exp1 = (Integer) exp1;
-        } else {
+        if (!(exp1 instanceof Integer)) {
             throw new Exception("Type error: Integer expected");
         }
 
-        if (exp2 instanceof Integer) {
-            exp2 = (Integer) exp2;
-        } else {
+        if (!(exp2 instanceof Integer)) {
             throw new Exception("Type error: Integer expected");
         }
 
@@ -261,15 +286,11 @@ public class Evaluator implements EvalVisitor {
         Object exp1 = eDiv.exp_1.eval(this);
         Object exp2 = eDiv.exp_2.eval(this);
 
-        if (exp1 instanceof Integer) {
-            exp1 = (Integer) exp1;
-        } else {
+        if (!(exp1 instanceof Integer)) {
             throw new Exception("Type error: Integer expected");
         }
 
-        if (exp2 instanceof Integer) {
-            exp2 = (Integer) exp2;
-        } else {
+        if (!(exp2 instanceof Integer)) {
             throw new Exception("Type error: Integer expected");
         }
 
@@ -282,15 +303,11 @@ public class Evaluator implements EvalVisitor {
         Object exp1 = eTimes.exp_1.eval(this);
         Object exp2 = eTimes.exp_2.eval(this);
 
-        if (exp1 instanceof Integer) {
-            exp1 = (Integer) exp1;
-        } else {
+        if (!(exp1 instanceof Integer)) {
             throw new Exception("Type error: Integer expected");
         }
 
-        if (exp2 instanceof Integer) {
-            exp2 = (Integer) exp2;
-        } else {
+        if (!(exp2 instanceof Integer)) {
             throw new Exception("Type error: Integer expected");
         }
 
