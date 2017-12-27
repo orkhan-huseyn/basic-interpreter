@@ -62,9 +62,9 @@ public class Editor {
         JToolBar toolBar = new JToolBar();
         frame.getContentPane().add(toolBar, BorderLayout.NORTH);
 
-        JButton btnParse = new JButton("Parse");
+        /*JButton btnParse = new JButton("Parse");*/
 
-        btnParse.addActionListener(e -> {
+        /*btnParse.addActionListener(e -> {
 
             String input = editor.getText();
 
@@ -93,9 +93,9 @@ public class Editor {
 
             }
 
-        });
+        });*/
 
-        toolBar.add(btnParse);
+        /*toolBar.add(btnParse);*/
 
         JButton btnEval = new JButton("Evaluate");
 
