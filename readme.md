@@ -1,6 +1,6 @@
 # Basic Interpreter for C like language
 
-Author: Orkhan Huseynli, BSIT 2018, "ADA" University
+Author: __Orkhan Huseynli__, BSIT 2018, "ADA" University
 
 Steps implemented:
 
@@ -12,7 +12,7 @@ Steps implemented:
 
 Test codes that interpreter is able to process:
 
-1. Basic if else evaluation
+#### 1. Basic if else evaluation
 ```
 int main() {
   int x = 12;
@@ -27,7 +27,7 @@ int main() {
 
 ```
 
-2. Basic while loop evalution
+#### 2. Basic while loop evalution
 
 ```
 int main() {
@@ -41,7 +41,7 @@ int main() {
 }
 ```
 
-3. Basic string comparison
+#### 3. Basic string comparison
 
 ```
 int main() {
