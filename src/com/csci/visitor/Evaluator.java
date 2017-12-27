@@ -252,15 +252,21 @@ public class Evaluator implements EvalVisitor {
         Object exp1 = ePlus.exp_1.eval(this);
         Object exp2 = ePlus.exp_2.eval(this);
 
-        if (!(exp1 instanceof Integer)) {
-            throw new Exception("Type error: Integer expected");
+        Object res = null;
+
+        if (exp1 instanceof Integer && exp2 instanceof Integer) {
+            res = (Integer)exp1 + (Integer)exp2;
+        } else if (exp1 instanceof Integer && exp2 instanceof Double) {
+            res = (Integer)exp1 + (Double) exp2;
+        }else if (exp1 instanceof Double && exp2 instanceof Integer) {
+            res = (Double)exp1 + (Integer) exp2;
+        }else if (exp1 instanceof String && exp2 instanceof String) {
+            res = (String)exp1 + (String) exp2;
+        } else {
+            throw new Exception(exp1.getClass().getName() + " cannot be added to " + exp1.getClass().getName());
         }
 
-        if (!(exp2 instanceof Integer)) {
-            throw new Exception("Type error: Integer expected");
-        }
-
-        return (Integer) exp1 + (Integer) exp2;
+        return res;
     }
 
     @Override

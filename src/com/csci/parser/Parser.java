@@ -316,6 +316,24 @@ public class Parser implements ParserInterface {
 
             return new ENEq(eInt, exp2);
 
+        }else if (first.is(TokenType.STRING) && second.is(TokenType.EQUALS)) {
+
+            nextToken();
+            EString eString = new EString(lookahead.getData());
+            nextToken();
+            Exp exp2 = parseExp();
+
+            return new EEq(eString, exp2);
+
+        } else if (first.is(TokenType.STRING) && second.is(TokenType.NOTEQUAL)) {
+
+            nextToken();
+            EString eString = new EString(lookahead.getData());
+            nextToken();
+            Exp exp2 = parseExp();
+
+            return new ENEq(eString, exp2);
+
         } else if (first.is(TokenType.IDENT) && second.is(TokenType.PLUS)) {
 
             nextToken();
@@ -453,6 +471,14 @@ public class Parser implements ParserInterface {
             EDouble eDouble = new EDouble(Double.parseDouble(lookahead.getData()));
             nextToken();
             return new EDecr(eDouble);
+
+        } else if (first.is(TokenType.STRING) && second.is(TokenType.PLUS)) {
+
+            nextToken();
+            EString eString = new EString(lookahead.getData());
+            nextToken();
+            Exp exp = parseExp();
+            return new EPlus(eString, exp);
 
         } else if (first.is(TokenType.IDENT)) {
 
