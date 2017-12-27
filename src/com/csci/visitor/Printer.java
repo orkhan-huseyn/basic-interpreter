@@ -59,6 +59,7 @@ public class Printer implements PrintVisitor {
         StringBuilder builder = new StringBuilder();
 
         builder.append("SInit: ");
+        builder.append(sInit.type_.accept(this));
         builder.append(sInit.id_);
         builder.append(sInit.exp_.accept(this));
 
@@ -308,26 +309,26 @@ public class Printer implements PrintVisitor {
 
     @Override
     public String visit(TypeBool typeBool) {
-        return "bool";
+        return "TypeBool";
     }
 
     @Override
     public String visit(TypeInt typeInt) {
-        return "int";
+        return "TypeInt";
     }
 
     @Override
     public String visit(TypeDouble typeDouble) {
-        return "float";
+        return "TypeDouble";
     }
 
     @Override
     public String visit(TypeString typeString) {
-        return "string";
+        return "TypeString";
     }
 
     @Override
     public String visit(TypeVoid typeVoid) {
-        return "void";
+        return "TypeVoid";
     }
 }

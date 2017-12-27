@@ -193,12 +193,20 @@ public class Evaluator implements EvalVisitor {
 
     @Override
     public Object visit(EString eString) throws Exception {
-        return eString.string_;
+        return eString.string_.replace("\"", "");
     }
 
     @Override
     public Object visit(EEq eEq) throws Exception {
-        return eEq.exp_1.eval(this) == eEq.exp_2.eval(this);
+        Boolean res = false;
+        Object exp1 = eEq.exp_1.eval(this);
+        Object exp2 = eEq.exp_2.eval(this);
+        if (exp1 instanceof  String && exp2 instanceof String) {
+            res = exp1.equals(exp2);
+        } else {
+            res = exp1 == exp2;
+        }
+        return res;
     }
 
     @Override
