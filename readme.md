@@ -15,12 +15,12 @@ Test codes that interpreter is able to process:
 #### 1. Basic if else evaluation
 ```
 int main() {
-  int x = 12;
-  int res;
-  if (x > 5) {
-     res = "greater";
+  string name = "Orkhan"; string res;
+  int privilege = 1;
+  if (privilege == 0) {
+     res = "Hello, " + name;
   } else {
-     res = "less";
+     res = "you don't have privilege for the operation";
   }
   return res;
 }
@@ -31,27 +31,34 @@ int main() {
 
 ```
 int main() {
-  int x = 0;
-  int y = 1;
-  while (x < 5) {
-     y = y * 2;
-     x++;
+  int count = 0;
+  string res = "Iteration: ";
+  while (count < 10) {
+    res = res + "," + count;
+    count++;
   }
-  return y;
+  return res;
 }
 ```
 
-#### 3. Basic string comparison
+#### 3. Basic eval error example
 
 ```
 int main() {
-  string firstName = "Orkhan";
-  string res = "Hello, ";
-  if (firstName == "Orkhan") {
-     res = res + firstName;
-  } else {
-     res = "I don't know you! :( ";
-  }
-  return res;  
+  int x;
+  int y;
+  x = 12;
+  return x + y;  
+}
+```
+
+#### 4. Basic parse error example
+
+```
+int main() {
+  int x;
+  int y
+  x = 12;
+  return x + y;  
 }
 ```
