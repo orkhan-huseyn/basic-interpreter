@@ -12,6 +12,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.*;
 
+import com.csci.grammar.CustomObject;
 import com.csci.grammar.PDefs;
 import com.csci.lexer.Lexer;
 import com.csci.lexer.Token;
@@ -115,7 +116,7 @@ public class Editor {
 
                     Program program = parser.parseProgram();
 
-                    Object returnValue = evaluator.visit((PDefs) program);
+                    CustomObject returnValue = evaluator.visit((PDefs) program);
 
                     System.out.println(evaluator.GLOBAL_SCOPE);
 

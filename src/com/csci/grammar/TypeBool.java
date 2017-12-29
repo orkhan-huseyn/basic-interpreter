@@ -16,4 +16,9 @@ public class TypeBool extends Type {
     public CustomObject eval(EvalVisitor visitor) throws Exception {
         return visitor.visit(this);
     }
+
+    @Override
+    public String toString() {
+        return "boolean";
+    }
 }

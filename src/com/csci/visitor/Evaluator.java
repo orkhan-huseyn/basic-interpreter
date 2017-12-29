@@ -79,7 +79,7 @@ public class Evaluator implements EvalVisitor {
             } else if (value.type instanceof TypeString && type instanceof TypeString) {
 
             } else {
-                throw new Exception("Type error: Trying to assign " + value.type.getClass().getName() + " to " + type.getClass().getName());
+                throw new Exception("Type error: Trying to assign " + value.type + " to " + type);
             }
 
             GLOBAL_SCOPE.put(variable, new CustomObject(type, value));
@@ -259,42 +259,129 @@ public class Evaluator implements EvalVisitor {
 
     @Override
     public CustomObject visit(EEq eEq) throws Exception {
+
         Boolean res = false;
+
         CustomObject exp1 = eEq.exp_1.eval(this);
+
         CustomObject exp2 = eEq.exp_2.eval(this);
+
         if (exp1.type instanceof TypeString && exp2.type instanceof TypeString) {
+
             res = exp1.value.equals(exp2.value);
+
         } else {
+
             res = exp1.value == exp2.value;
+
         }
+
         return new CustomObject(new TypeBool(), res);
     }
 
     @Override
     public CustomObject visit(ENEq enEq) throws Exception {
+
         Boolean res = enEq.exp_1.eval(this).value != enEq.exp_2.eval(this).value;
+
         return new CustomObject(new TypeBool(), res);
     }
 
     @Override
     public CustomObject visit(EGt eGt) throws Exception {
-        Boolean res = eGt.exp_1.eval(this).value > eGt.exp_2.eval(this).value;
-        return new CustomObject(new TypeBool(), res);
+
+        CustomObject exp1 = eGt.exp_1.eval(this);
+
+        CustomObject exp2 = eGt.exp_2.eval(this);
+
+        CustomObject res = null;
+
+        if ((exp1.type instanceof TypeBool || exp1.type instanceof TypeInt) && (exp2.type instanceof TypeBool || exp2.type instanceof TypeInt)) {
+
+            Boolean isGreater = (Double)eGt.exp_1.eval(this).value > (Double)eGt.exp_2.eval(this).value;
+
+            res = new CustomObject(new TypeBool(), isGreater);
+
+        } else {
+
+            throw new Exception("Type error: Only integers or doubles can be compared!");
+
+        }
+
+        return res;
     }
 
     @Override
     public CustomObject visit(EGtEq eGtEq) throws Exception {
-        return (Integer) eGtEq.exp_1.eval(this) >= (Integer) eGtEq.exp_2.eval(this);
+
+        CustomObject exp1 = eGtEq.exp_1.eval(this);
+
+        CustomObject exp2 = eGtEq.exp_2.eval(this);
+
+        CustomObject res = null;
+
+        if ((exp1.type instanceof TypeBool || exp1.type instanceof TypeInt) && (exp2.type instanceof TypeBool || exp2.type instanceof TypeInt)) {
+
+            Boolean isGreater = (Double)eGtEq.exp_1.eval(this).value >= (Double)eGtEq.exp_2.eval(this).value;
+
+            res = new CustomObject(new TypeBool(), isGreater);
+
+        } else {
+
+            throw new Exception("Type error: Only integers or doubles can be compared!");
+
+        }
+
+        return res;
+
     }
 
     @Override
     public CustomObject visit(ELt eLt) throws Exception {
-        return (Integer) eLt.exp_1.eval(this) < (Integer) eLt.exp_2.eval(this);
+
+        CustomObject exp1 = eLt.exp_1.eval(this);
+
+        CustomObject exp2 = eLt.exp_2.eval(this);
+
+        CustomObject res = null;
+
+        if ((exp1.type instanceof TypeBool || exp1.type instanceof TypeInt) && (exp2.type instanceof TypeBool || exp2.type instanceof TypeInt)) {
+
+            Boolean isGreater = (Double)eLt.exp_1.eval(this).value < (Double)eLt.exp_2.eval(this).value;
+
+            res = new CustomObject(new TypeBool(), isGreater);
+
+        } else {
+
+            throw new Exception("Type error: Only integers or doubles can be compared!");
+
+        }
+
+        return res;
     }
 
     @Override
     public CustomObject visit(ELtEq eLtEq) throws Exception {
-        return (Integer) eLtEq.exp_1.eval(this) <= (Integer) eLtEq.exp_2.eval(this);
+
+        CustomObject exp1 = eLtEq.exp_1.eval(this);
+
+        CustomObject exp2 = eLtEq.exp_2.eval(this);
+
+        CustomObject res = null;
+
+        if ((exp1.type instanceof TypeBool || exp1.type instanceof TypeInt) && (exp2.type instanceof TypeBool || exp2.type instanceof TypeInt)) {
+
+            Boolean isGreater = (Double)eLtEq.exp_1.eval(this).value <= (Double)eLtEq.exp_2.eval(this).value;
+
+            res = new CustomObject(new TypeBool(), isGreater);
+
+        } else {
+
+            throw new Exception("Type error: Only integers or doubles can be compared!");
+
+        }
+
+        return res;
     }
 
     @Override
@@ -320,23 +407,33 @@ public class Evaluator implements EvalVisitor {
     @Override
     public CustomObject visit(EPlus ePlus) throws Exception {
 
-        Object exp1 = ePlus.exp_1.eval(this);
-        Object exp2 = ePlus.exp_2.eval(this);
+        CustomObject exp1 = ePlus.exp_1.eval(this);
+        CustomObject exp2 = ePlus.exp_2.eval(this);
 
-        Object res = null;
+        CustomObject res = null;
 
-        if (exp1 instanceof Integer && exp2 instanceof Integer) {
-            res = (Integer) exp1 + (Integer) exp2;
-        } else if (exp1 instanceof Double && exp2 instanceof Double) {
-            res = (Double) exp1 + (Double) exp2;
-        } else if (exp1 instanceof Integer && exp2 instanceof Double) {
-            res = (Integer) exp1 + (Double) exp2;
-        } else if (exp1 instanceof Double && exp2 instanceof Integer) {
-            res = (Double) exp1 + (Integer) exp2;
-        } else if (exp1 instanceof String || exp2 instanceof String) {
-            res = exp1.toString() + exp2.toString();
+        if (exp1.type instanceof TypeInt && exp2.type instanceof TypeInt) {
+
+            Integer prod = (Integer)exp1.value + (Integer)exp2.value;
+
+            res = new CustomObject(new TypeInt(), prod);
+
+        } else if ((exp1.type instanceof TypeBool || exp1.type instanceof TypeInt) && (exp2.type instanceof TypeBool || exp2.type instanceof TypeInt)) {
+
+            Double prod = (Double)exp1.value + (Double)exp2.value;
+
+            res = new CustomObject(new TypeDouble(), prod);
+
+        } else if (exp1.type instanceof TypeString && exp2.type instanceof TypeString) {
+
+            String prod = exp1.value.toString() + exp2.value.toString();
+
+            res = new CustomObject(new TypeString(), prod);
+
         } else {
-            throw new Exception(exp1.getClass().getName() + " cannot be added to " + exp1.getClass().getName());
+
+            throw new Exception(exp1.type + " cannot be added to " + exp2.type);
+
         }
 
         return res;
@@ -345,52 +442,88 @@ public class Evaluator implements EvalVisitor {
     @Override
     public CustomObject visit(EMinus eMinus) throws Exception {
 
-        Object exp1 = eMinus.exp_1.eval(this);
-        Object exp2 = eMinus.exp_2.eval(this);
+        CustomObject exp1 = eMinus.exp_1.eval(this);
+        CustomObject exp2 = eMinus.exp_2.eval(this);
 
-        if (!(exp1 instanceof Integer)) {
-            throw new Exception("Type error: Integer expected");
+        CustomObject res = null;
+
+        if (exp1.type instanceof TypeInt && exp2.type instanceof TypeInt) {
+
+            Integer prod = (Integer)exp1.value - (Integer)exp2.value;
+
+            res = new CustomObject(new TypeInt(), prod);
+
+        } else if ((exp1.type instanceof TypeBool || exp1.type instanceof TypeInt) && (exp2.type instanceof TypeBool || exp2.type instanceof TypeInt)) {
+
+            Double prod = (Double)exp1.value - (Double)exp2.value;
+
+            res = new CustomObject(new TypeDouble(), prod);
+
+        } else {
+
+            throw new Exception("Type error: Only integers or doubles can be subtracted!");
+
         }
 
-        if (!(exp2 instanceof Integer)) {
-            throw new Exception("Type error: Integer expected");
-        }
-
-        return (Integer) exp1 - (Integer) exp2;
+        return res;
     }
 
     @Override
     public CustomObject visit(EDiv eDiv) throws Exception {
 
-        Object exp1 = eDiv.exp_1.eval(this);
-        Object exp2 = eDiv.exp_2.eval(this);
+        CustomObject exp1 = eDiv.exp_1.eval(this);
+        CustomObject exp2 = eDiv.exp_2.eval(this);
 
-        if (!(exp1 instanceof Integer)) {
-            throw new Exception("Type error: Integer expected");
+        CustomObject res = null;
+
+        if (exp1.type instanceof TypeInt && exp2.type instanceof TypeInt) {
+
+            Integer prod = (Integer)exp1.value / (Integer)exp2.value;
+
+            res = new CustomObject(new TypeInt(), prod);
+
+        } else if ((exp1.type instanceof TypeBool || exp1.type instanceof TypeInt) && (exp2.type instanceof TypeBool || exp2.type instanceof TypeInt)) {
+
+            Double prod = (Double)exp1.value / (Double)exp2.value;
+
+            res = new CustomObject(new TypeDouble(), prod);
+
+        } else {
+
+            throw new Exception("Type error: Only integers or doubles can be divided!");
+
         }
 
-        if (!(exp2 instanceof Integer)) {
-            throw new Exception("Type error: Integer expected");
-        }
-
-        return (Integer) exp1 / (Integer) exp2;
+        return res;
     }
 
     @Override
     public CustomObject visit(ETimes eTimes) throws Exception {
 
-        Object exp1 = eTimes.exp_1.eval(this);
-        Object exp2 = eTimes.exp_2.eval(this);
+        CustomObject exp1 = eTimes.exp_1.eval(this);
+        CustomObject exp2 = eTimes.exp_2.eval(this);
 
-        if (!(exp1 instanceof Integer)) {
-            throw new Exception("Type error: Integer expected");
+        CustomObject res = null;
+
+        if (exp1.type instanceof TypeInt && exp2.type instanceof TypeInt) {
+
+            Integer prod = (Integer)exp1.value * (Integer)exp2.value;
+
+            res = new CustomObject(new TypeInt(), prod);
+
+        } else if ((exp1.type instanceof TypeBool || exp1.type instanceof TypeInt) && (exp2.type instanceof TypeBool || exp2.type instanceof TypeInt)) {
+
+            Double prod = (Double)exp1.value * (Double)exp2.value;
+
+            res = new CustomObject(new TypeBool(), prod);
+
+        } else {
+
+            throw new Exception("Type error: Only integers or doubles can be multiplied!");
+
         }
 
-        if (!(exp2 instanceof Integer)) {
-            throw new Exception("Type error: Integer expected");
-        }
-
-        return (Integer) exp1 * (Integer) exp2;
+        return res;
     }
 
     @Override

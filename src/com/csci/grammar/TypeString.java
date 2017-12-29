@@ -18,4 +18,10 @@ public class TypeString extends Type {
         return visitor.visit(this);
     }
 
+
+    @Override
+    public String toString() {
+        return "string";
+    }
+
 }
