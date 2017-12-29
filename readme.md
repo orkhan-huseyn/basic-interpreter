@@ -81,7 +81,7 @@ int main() {
 //Output: trying to assign string to integer
 ```
 
-#### 4. Basic boolean operations example
+#### 5. Basic boolean operations example
 ```
 int main() {
   int z = 12;
