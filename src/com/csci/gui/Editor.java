@@ -115,11 +115,12 @@ public class Editor {
 
                     Program program = parser.parseProgram();
 
-                    Object evaluted = evaluator.visit((PDefs) program);
+                    Object returnValue = evaluator.visit((PDefs) program);
 
                     System.out.println(evaluator.GLOBAL_SCOPE);
 
-                    console.setText(evaluted.toString());
+                    if (returnValue != null)
+                        console.setText(returnValue.toString());
 
                 } catch (Exception ex) {
                     console.setText(ex.toString());
