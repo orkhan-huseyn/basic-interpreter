@@ -15,12 +15,12 @@ Test codes that interpreter is able to process:
 #### 1. Basic if else evaluation
 ```
 int main() {
-  int x = 12;
-  int res;
-  if (x > 5) {
-     res = "greater";
+  string name = "Orkhan"; string res;
+  int privilege = 1;
+  if (privilege == 0) {
+     res = "Hello, " + name;
   } else {
-     res = "less";
+     res = "you don't have privilege for the operation";
   }
   return res;
 }
