@@ -147,6 +147,7 @@ public class Evaluator implements EvalVisitor {
         value = (Integer)value + 1;
         if (eIncr.exp_ instanceof EId) {
             GLOBAL_SCOPE.put(((EId) eIncr.exp_).id_, value);
+            return null;
         }
         return value;
     }
@@ -163,6 +164,10 @@ public class Evaluator implements EvalVisitor {
             throw new Exception("Type error: Integer expected!");
         }
         value = (Integer)value - 1;
+        if (eDecr.exp_ instanceof EId) {
+            GLOBAL_SCOPE.put(((EId) eDecr.exp_).id_, value);
+            return null;
+        }
         return value;
     }
 
@@ -264,6 +269,8 @@ public class Evaluator implements EvalVisitor {
 
         if (exp1 instanceof Integer && exp2 instanceof Integer) {
             res = (Integer)exp1 + (Integer)exp2;
+        } else if (exp1 instanceof Double && exp2 instanceof Double) {
+            res = (Double)exp1 + (Double)exp2;
         } else if (exp1 instanceof Integer && exp2 instanceof Double) {
             res = (Integer)exp1 + (Double) exp2;
         }else if (exp1 instanceof Double && exp2 instanceof Integer) {
