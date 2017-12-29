@@ -268,8 +268,8 @@ public class Evaluator implements EvalVisitor {
             res = (Integer)exp1 + (Double) exp2;
         }else if (exp1 instanceof Double && exp2 instanceof Integer) {
             res = (Double)exp1 + (Integer) exp2;
-        }else if (exp1 instanceof String && exp2 instanceof String) {
-            res = (String)exp1 + (String) exp2;
+        }else if (exp1 instanceof String || exp2 instanceof String) {
+            res = exp1.toString() + exp2.toString();
         } else {
             throw new Exception(exp1.getClass().getName() + " cannot be added to " + exp1.getClass().getName());
         }
