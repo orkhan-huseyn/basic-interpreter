@@ -7,16 +7,16 @@ import java.util.Map;
 
 public class Evaluator implements EvalVisitor {
 
-    public Map<String, Object> GLOBAL_SCOPE;
+    public Map<String, CustomObject> GLOBAL_SCOPE;
 
     public Evaluator() {
         GLOBAL_SCOPE = new HashMap<>();
     }
 
     @Override
-    public Object visit(PDefs pDefs) throws Exception {
+    public CustomObject visit(PDefs pDefs) throws Exception {
 
-        Object res = null;
+        CustomObject res = null;
 
         for (Def def : pDefs.listdef_) {
             res = def.eval(this);
@@ -26,9 +26,9 @@ public class Evaluator implements EvalVisitor {
     }
 
     @Override
-    public Object visit(DFun dFun) throws Exception {
+    public CustomObject visit(DFun dFun) throws Exception {
 
-        Object res = null;
+        CustomObject res = null;
 
         for (Stm stm : dFun.liststm_) {
             res = stm.eval(this);
@@ -38,15 +38,16 @@ public class Evaluator implements EvalVisitor {
     }
 
     @Override
-    public Object visit(SReturn sReturn) throws Exception {
+    public CustomObject visit(SReturn sReturn) throws Exception {
         return sReturn.exp_.eval(this);
     }
 
     @Override
-    public Object visit(SDecls sDecls) throws Exception {
+    public CustomObject visit(SDecls sDecls) throws Exception {
         if (!GLOBAL_SCOPE.containsKey(sDecls.id_)) {
             String variable = sDecls.id_;
-            GLOBAL_SCOPE.put(variable, null);
+            Type type = sDecls.type_;
+            GLOBAL_SCOPE.put(variable, new CustomObject(type, null));
         } else {
             throw new Exception("Variable " + sDecls.id_ + " already exist in this scope!");
         }
@@ -54,17 +55,35 @@ public class Evaluator implements EvalVisitor {
     }
 
     @Override
-    public Object visit(ADecl aDecl) throws Exception {
+    public CustomObject visit(ADecl aDecl) throws Exception {
         return null;
     }
 
     @Override
-    public Object visit(SInit sInit) throws Exception {
+    public CustomObject visit(SInit sInit) throws Exception {
 
         if (!GLOBAL_SCOPE.containsKey(sInit.id_)) {
+
             String variable = sInit.id_;
-            Object value = sInit.exp_.eval(this);
-            GLOBAL_SCOPE.put(variable, value);
+
+            CustomObject value = sInit.exp_.eval(this);
+
+            Type type = sInit.type_;
+
+            if (value.type instanceof TypeBool && type instanceof TypeBool) {
+
+            } else if (value.type instanceof TypeInt && type instanceof TypeInt) {
+
+            } else if (value.type instanceof TypeDouble && type instanceof TypeDouble) {
+
+            } else if (value.type instanceof TypeString && type instanceof TypeString) {
+
+            } else {
+                throw new Exception("Type error: Trying to assign " + value.type.getClass().getName() + " to " + type.getClass().getName());
+            }
+
+            GLOBAL_SCOPE.put(variable, new CustomObject(type, value));
+
         } else {
             throw new Exception("Variable " + sInit.id_ + " already exist in this scope!");
         }
@@ -74,13 +93,29 @@ public class Evaluator implements EvalVisitor {
     }
 
     @Override
-    public Object visit(SAss sAss) throws Exception {
+    public CustomObject visit(SAss sAss) throws Exception {
 
         if (GLOBAL_SCOPE.containsKey(sAss.id)) {
 
             String variable = sAss.id;
-            Object value = sAss.exp.eval(this);
-            GLOBAL_SCOPE.put(variable, value);
+
+            CustomObject value = sAss.exp.eval(this);
+
+            Type type = GLOBAL_SCOPE.get(variable).type;
+
+            if (value.type instanceof TypeBool && type instanceof TypeBool) {
+
+            } else if (value.type instanceof TypeInt && type instanceof TypeInt) {
+
+            } else if (value.type instanceof TypeDouble && type instanceof TypeDouble) {
+
+            } else if (value.type instanceof TypeString && type instanceof TypeString) {
+
+            } else {
+                throw new Exception("Type error: Trying to assign " + value.type.getClass().getName() + " to " + type.getClass().getName());
+            }
+
+            GLOBAL_SCOPE.put(variable, new CustomObject(type, value));
 
         } else {
             throw new Exception("Variable " + sAss.id + " has not beed declared in this scope!");
@@ -91,15 +126,21 @@ public class Evaluator implements EvalVisitor {
     }
 
     @Override
-    public Object visit(SExp sExp) throws Exception {
+    public CustomObject visit(SExp sExp) throws Exception {
         return sExp.exp_.eval(this);
     }
 
     @Override
-    public Object visit(SIfElse sIfElse) throws Exception {
-        Object condition = sIfElse.exp_.eval(this);
-        Object res = null;
-        if ((Boolean) condition) {
+    public CustomObject visit(SIfElse sIfElse) throws Exception {
+
+        CustomObject condition = sIfElse.exp_.eval(this);
+
+        CustomObject res = null;
+
+        if (!(condition.type instanceof TypeBool))
+            throw new Exception("Type error: condition is not boolean");
+
+        if ((Boolean) condition.value) {
             for (Stm stm : sIfElse.stm_1) {
                 res = stm.eval(this);
             }
@@ -108,14 +149,21 @@ public class Evaluator implements EvalVisitor {
                 res = stm.eval(this);
             }
         }
+
         return res;
     }
 
     @Override
-    public Object visit(SWhile sWhile) throws Exception {
-        Object condition = sWhile.exp_.eval(this);
-        Object res = null;
-        if ((Boolean) condition) {
+    public CustomObject visit(SWhile sWhile) throws Exception {
+
+        CustomObject condition = sWhile.exp_.eval(this);
+
+        CustomObject res = null;
+
+        if (!(condition.type instanceof TypeBool))
+            throw new Exception("Type error: condition is not boolean");
+
+        if ((Boolean) condition.value) {
             for (Stm stm : sWhile.stm_) {
                 res = stm.eval(this);
             }
@@ -126,11 +174,11 @@ public class Evaluator implements EvalVisitor {
     }
 
     @Override
-    public Object visit(EId eId) throws Exception {
+    public CustomObject visit(EId eId) throws Exception {
 
-        if (GLOBAL_SCOPE.containsKey(eId.id_) && GLOBAL_SCOPE.get(eId.id_) != null) {
+        if (GLOBAL_SCOPE.containsKey(eId.id_) && GLOBAL_SCOPE.get(eId.id_).value != null) {
             return GLOBAL_SCOPE.get(eId.id_);
-        } else if (GLOBAL_SCOPE.containsKey(eId.id_) && GLOBAL_SCOPE.get(eId.id_) == null) {
+        } else if (GLOBAL_SCOPE.containsKey(eId.id_) && GLOBAL_SCOPE.get(eId.id_).value == null) {
             throw new Exception("Variable " + eId.id_ + " has never been initialized!");
         } else {
             throw new Exception("Variable " + eId.id_ + " does not exist in this scope!");
@@ -139,128 +187,138 @@ public class Evaluator implements EvalVisitor {
     }
 
     @Override
-    public Object visit(EIncr eIncr) throws Exception {
-        Object value = eIncr.exp_.eval(this);
-        if (!(value instanceof Integer)) {
-            throw new Exception("Type error: Integer expected!");
-        }
-        value = (Integer)value + 1;
-        if (eIncr.exp_ instanceof EId) {
-            GLOBAL_SCOPE.put(((EId) eIncr.exp_).id_, value);
-            return null;
-        }
-        return value;
-    }
+    public CustomObject visit(EIncr eIncr) throws Exception {
 
-    @Override
-    public Object visit(EPIncr epIncr) throws Exception {
-        return null;
-    }
+        CustomObject value = eIncr.exp_.eval(this);
 
-    @Override
-    public Object visit(EDecr eDecr) throws Exception {
-        Object value = eDecr.exp_.eval(this);
-        if (!(value instanceof Integer)) {
-            throw new Exception("Type error: Integer expected!");
-        }
-        value = (Integer)value - 1;
-        if (eDecr.exp_ instanceof EId) {
-            GLOBAL_SCOPE.put(((EId) eDecr.exp_).id_, value);
-            return null;
-        }
-        return value;
-    }
+        if (value.type instanceof TypeInt) {
 
-    @Override
-    public Object visit(EPDecr epDecr) throws Exception {
-        return null;
-    }
+            value.value = (Integer) value.value + 1;
+            if (eIncr.exp_ instanceof EId) {
+                GLOBAL_SCOPE.put(((EId) eIncr.exp_).id_, value);
+                return null;
+            }
+            return value;
 
-    @Override
-    public Object visit(EInt eInt) throws Exception {
-        return eInt.integer_;
-    }
-
-    @Override
-    public Object visit(ETrue eTrue) throws Exception {
-        return true;
-    }
-
-    @Override
-    public Object visit(EFalse eFalse) throws Exception {
-        return false;
-    }
-
-    @Override
-    public Object visit(EDouble eDouble) throws Exception {
-        return eDouble.double_;
-    }
-
-    @Override
-    public Object visit(EString eString) throws Exception {
-        return eString.string_.replace("\"", "");
-    }
-
-    @Override
-    public Object visit(EEq eEq) throws Exception {
-        Boolean res = false;
-        Object exp1 = eEq.exp_1.eval(this);
-        Object exp2 = eEq.exp_2.eval(this);
-        if (exp1 instanceof  String && exp2 instanceof String) {
-            res = exp1.equals(exp2);
         } else {
-            res = exp1 == exp2;
+            throw new Exception("Type error: Integer or Float expected!");
         }
-        return res;
     }
 
     @Override
-    public Object visit(ENEq enEq) throws Exception {
-        return enEq.exp_1.eval(this) != enEq.exp_2.eval(this);
+    public CustomObject visit(EPIncr epIncr) throws Exception {
+        return null;
     }
 
     @Override
-    public Object visit(EGt eGt) throws Exception {
-        return (Integer) eGt.exp_1.eval(this) > (Integer) eGt.exp_2.eval(this);
+    public CustomObject visit(EDecr eDecr) throws Exception {
+        CustomObject value = eDecr.exp_.eval(this);
+        if (value.type instanceof TypeInt) {
+
+            value.value = (Integer) value.value - 1;
+            if (eDecr.exp_ instanceof EId) {
+                GLOBAL_SCOPE.put(((EId) eDecr.exp_).id_, value);
+                return null;
+            }
+            return value;
+
+        } else {
+            throw new Exception("Type error: Integer or Double expected!");
+        }
     }
 
     @Override
-    public Object visit(EGtEq eGtEq) throws Exception {
+    public CustomObject visit(EPDecr epDecr) throws Exception {
+        return null;
+    }
+
+    @Override
+    public CustomObject visit(EInt eInt) throws Exception {
+        return new CustomObject(new TypeInt(), eInt.integer_);
+    }
+
+    @Override
+    public CustomObject visit(ETrue eTrue) throws Exception {
+        return new CustomObject(new TypeBool(), true);
+    }
+
+    @Override
+    public CustomObject visit(EFalse eFalse) throws Exception {
+        return new CustomObject(new TypeBool(), false);
+    }
+
+    @Override
+    public CustomObject visit(EDouble eDouble) throws Exception {
+        return new CustomObject(new TypeDouble(), eDouble.double_);
+    }
+
+    @Override
+    public CustomObject visit(EString eString) throws Exception {
+        return new CustomObject(new TypeString(), eString.string_.replace("\"", ""));
+    }
+
+    @Override
+    public CustomObject visit(EEq eEq) throws Exception {
+        Boolean res = false;
+        CustomObject exp1 = eEq.exp_1.eval(this);
+        CustomObject exp2 = eEq.exp_2.eval(this);
+        if (exp1.type instanceof TypeString && exp2.type instanceof TypeString) {
+            res = exp1.value.equals(exp2.value);
+        } else {
+            res = exp1.value == exp2.value;
+        }
+        return new CustomObject(new TypeBool(), res);
+    }
+
+    @Override
+    public CustomObject visit(ENEq enEq) throws Exception {
+        Boolean res = enEq.exp_1.eval(this).value != enEq.exp_2.eval(this).value;
+        return new CustomObject(new TypeBool(), res);
+    }
+
+    @Override
+    public CustomObject visit(EGt eGt) throws Exception {
+        Boolean res = eGt.exp_1.eval(this).value > eGt.exp_2.eval(this).value;
+        return new CustomObject(new TypeBool(), res);
+    }
+
+    @Override
+    public CustomObject visit(EGtEq eGtEq) throws Exception {
         return (Integer) eGtEq.exp_1.eval(this) >= (Integer) eGtEq.exp_2.eval(this);
     }
 
     @Override
-    public Object visit(ELt eLt) throws Exception {
+    public CustomObject visit(ELt eLt) throws Exception {
         return (Integer) eLt.exp_1.eval(this) < (Integer) eLt.exp_2.eval(this);
     }
 
     @Override
-    public Object visit(ELtEq eLtEq) throws Exception {
+    public CustomObject visit(ELtEq eLtEq) throws Exception {
         return (Integer) eLtEq.exp_1.eval(this) <= (Integer) eLtEq.exp_2.eval(this);
     }
 
     @Override
-    public Object visit(EAnd eAnd) throws Exception {
+    public CustomObject visit(EAnd eAnd) throws Exception {
         return null;
     }
 
     @Override
-    public Object visit(EOr eOr) throws Exception {
+    public CustomObject visit(EOr eOr) throws Exception {
         return null;
     }
 
     @Override
-    public Object visit(EApp eApp) throws Exception {
+    public CustomObject visit(EApp eApp) throws Exception {
         return null;
     }
 
     @Override
-    public Object visit(EAss eAss) throws Exception {
+    public CustomObject visit(EAss eAss) throws Exception {
         return null;
     }
 
     @Override
-    public Object visit(EPlus ePlus) throws Exception {
+    public CustomObject visit(EPlus ePlus) throws Exception {
 
         Object exp1 = ePlus.exp_1.eval(this);
         Object exp2 = ePlus.exp_2.eval(this);
@@ -268,14 +326,14 @@ public class Evaluator implements EvalVisitor {
         Object res = null;
 
         if (exp1 instanceof Integer && exp2 instanceof Integer) {
-            res = (Integer)exp1 + (Integer)exp2;
+            res = (Integer) exp1 + (Integer) exp2;
         } else if (exp1 instanceof Double && exp2 instanceof Double) {
-            res = (Double)exp1 + (Double)exp2;
+            res = (Double) exp1 + (Double) exp2;
         } else if (exp1 instanceof Integer && exp2 instanceof Double) {
-            res = (Integer)exp1 + (Double) exp2;
-        }else if (exp1 instanceof Double && exp2 instanceof Integer) {
-            res = (Double)exp1 + (Integer) exp2;
-        }else if (exp1 instanceof String || exp2 instanceof String) {
+            res = (Integer) exp1 + (Double) exp2;
+        } else if (exp1 instanceof Double && exp2 instanceof Integer) {
+            res = (Double) exp1 + (Integer) exp2;
+        } else if (exp1 instanceof String || exp2 instanceof String) {
             res = exp1.toString() + exp2.toString();
         } else {
             throw new Exception(exp1.getClass().getName() + " cannot be added to " + exp1.getClass().getName());
@@ -285,7 +343,7 @@ public class Evaluator implements EvalVisitor {
     }
 
     @Override
-    public Object visit(EMinus eMinus) throws Exception {
+    public CustomObject visit(EMinus eMinus) throws Exception {
 
         Object exp1 = eMinus.exp_1.eval(this);
         Object exp2 = eMinus.exp_2.eval(this);
@@ -302,7 +360,7 @@ public class Evaluator implements EvalVisitor {
     }
 
     @Override
-    public Object visit(EDiv eDiv) throws Exception {
+    public CustomObject visit(EDiv eDiv) throws Exception {
 
         Object exp1 = eDiv.exp_1.eval(this);
         Object exp2 = eDiv.exp_2.eval(this);
@@ -319,7 +377,7 @@ public class Evaluator implements EvalVisitor {
     }
 
     @Override
-    public Object visit(ETimes eTimes) throws Exception {
+    public CustomObject visit(ETimes eTimes) throws Exception {
 
         Object exp1 = eTimes.exp_1.eval(this);
         Object exp2 = eTimes.exp_2.eval(this);
@@ -336,27 +394,27 @@ public class Evaluator implements EvalVisitor {
     }
 
     @Override
-    public Object visit(TypeBool typeBool) throws Exception {
+    public CustomObject visit(TypeBool typeBool) throws Exception {
         return null;
     }
 
     @Override
-    public Object visit(TypeInt typeInt) throws Exception {
+    public CustomObject visit(TypeInt typeInt) throws Exception {
         return null;
     }
 
     @Override
-    public Object visit(TypeDouble typeDouble) throws Exception {
+    public CustomObject visit(TypeDouble typeDouble) throws Exception {
         return null;
     }
 
     @Override
-    public Object visit(TypeString typeString) throws Exception {
+    public CustomObject visit(TypeString typeString) throws Exception {
         return null;
     }
 
     @Override
-    public Object visit(TypeVoid typeVoid) throws Exception {
+    public CustomObject visit(TypeVoid typeVoid) throws Exception {
         return null;
     }
 }

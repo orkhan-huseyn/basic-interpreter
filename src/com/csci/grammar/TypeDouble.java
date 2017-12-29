@@ -13,7 +13,7 @@ public class TypeDouble extends Type {
     }
 
     @Override
-    public Object eval(EvalVisitor visitor) throws Exception {
+    public CustomObject eval(EvalVisitor visitor) throws Exception {
         return visitor.visit(this);
     }
 }

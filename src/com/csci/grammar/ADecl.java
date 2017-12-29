@@ -19,7 +19,7 @@ public class ADecl extends Arg {
     }
 
     @Override
-    public Object eval(EvalVisitor visitor) throws Exception  {
+    public CustomObject eval(EvalVisitor visitor) throws Exception  {
         return visitor.visit(this);
     }
 }

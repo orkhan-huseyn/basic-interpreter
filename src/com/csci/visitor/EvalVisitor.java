@@ -5,82 +5,82 @@ import com.csci.grammar.*;
 
 public interface EvalVisitor {
 
-    Object visit(PDefs pDefs) throws Exception;
+    CustomObject visit(PDefs pDefs) throws Exception;
 
-    Object visit(DFun dFun) throws Exception;
+    CustomObject visit(DFun dFun) throws Exception;
 
-    Object visit(SReturn sReturn) throws Exception;
+    CustomObject visit(SReturn sReturn) throws Exception;
 
-    Object visit(SDecls sDecls) throws Exception;
+    CustomObject visit(SDecls sDecls) throws Exception;
 
-    Object visit(ADecl aDecl) throws Exception;
+    CustomObject visit(ADecl aDecl) throws Exception;
 
-    Object visit(SInit sInit) throws Exception;
+    CustomObject visit(SInit sInit) throws Exception;
 
-    Object visit(SAss sAss) throws Exception;
+    CustomObject visit(SAss sAss) throws Exception;
 
-    Object visit(SExp sExp) throws Exception;
+    CustomObject visit(SExp sExp) throws Exception;
 
-    Object visit(SIfElse sIfElse) throws Exception;
+    CustomObject visit(SIfElse sIfElse) throws Exception;
 
-    Object visit(SWhile sWhile) throws Exception;
+    CustomObject visit(SWhile sWhile) throws Exception;
 
-    Object visit(EId eId) throws Exception;
+    CustomObject visit(EId eId) throws Exception;
 
-    Object visit(EIncr eIncr) throws Exception;
+    CustomObject visit(EIncr eIncr) throws Exception;
 
-    Object visit(EPIncr epIncr) throws Exception;
+    CustomObject visit(EPIncr epIncr) throws Exception;
 
-    Object visit(EDecr eDecr) throws Exception;
+    CustomObject visit(EDecr eDecr) throws Exception;
 
-    Object visit(EPDecr epDecr) throws Exception;
+    CustomObject visit(EPDecr epDecr) throws Exception;
 
-    Object visit(EInt eInt) throws Exception;
+    CustomObject visit(EInt eInt) throws Exception;
 
-    Object visit(ETrue eTrue) throws Exception;
+    CustomObject visit(ETrue eTrue) throws Exception;
 
-    Object visit(EFalse eFalse) throws Exception;
+    CustomObject visit(EFalse eFalse) throws Exception;
 
-    Object visit(EDouble eDouble) throws Exception;
+    CustomObject visit(EDouble eDouble) throws Exception;
 
-    Object visit(EString eString) throws Exception;
+    CustomObject visit(EString eString) throws Exception;
 
-    Object visit(EEq eEq) throws Exception;
+    CustomObject visit(EEq eEq) throws Exception;
 
-    Object visit(ENEq enEq) throws Exception;
+    CustomObject visit(ENEq enEq) throws Exception;
 
-    Object visit(EGt eGt) throws Exception;
+    CustomObject visit(EGt eGt) throws Exception;
 
-    Object visit(EGtEq eGtEq) throws Exception;
+    CustomObject visit(EGtEq eGtEq) throws Exception;
 
-    Object visit(ELt eLt) throws Exception;
+    CustomObject visit(ELt eLt) throws Exception;
 
-    Object visit(ELtEq eLtEq) throws Exception;
+    CustomObject visit(ELtEq eLtEq) throws Exception;
 
-    Object visit(EAnd eAnd) throws Exception;
+    CustomObject visit(EAnd eAnd) throws Exception;
 
-    Object visit(EOr eOr) throws Exception;
+    CustomObject visit(EOr eOr) throws Exception;
 
-    Object visit(EApp eApp) throws Exception;
+    CustomObject visit(EApp eApp) throws Exception;
 
-    Object visit(EAss eAss) throws Exception;
+    CustomObject visit(EAss eAss) throws Exception;
 
-    Object visit(EPlus ePlus) throws Exception;
+    CustomObject visit(EPlus ePlus) throws Exception;
 
-    Object visit(EMinus eMinus) throws Exception;
+    CustomObject visit(EMinus eMinus) throws Exception;
 
-    Object visit(EDiv eDiv) throws Exception;
+    CustomObject visit(EDiv eDiv) throws Exception;
 
-    Object visit(ETimes eTimes) throws Exception;
+    CustomObject visit(ETimes eTimes) throws Exception;
 
-    Object visit(TypeBool typeBool) throws Exception;
+    CustomObject visit(TypeBool typeBool) throws Exception;
 
-    Object visit(TypeInt typeInt) throws Exception;
+    CustomObject visit(TypeInt typeInt) throws Exception;
 
-    Object visit(TypeDouble typeDouble) throws Exception;
+    CustomObject visit(TypeDouble typeDouble) throws Exception;
 
-    Object visit(TypeString typeString) throws Exception;
+    CustomObject visit(TypeString typeString) throws Exception;
 
-    Object visit(TypeVoid typeVoid) throws Exception;
+    CustomObject visit(TypeVoid typeVoid) throws Exception;
 
 }
