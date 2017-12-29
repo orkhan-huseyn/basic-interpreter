@@ -35,14 +35,14 @@ int main() {
 int main() {
   int count = 0;
   string res = "Iteration: ";
-  while (count < 10) {
+  while (true && count <= 10) {
     res = res + "," + count;
     count++;
   }
   return res;
 }
 
-//Output: Iteration: ,0,1,2,3,4,5,6,7,8,9
+//Output: Iteration: ,0,1,2,3,4,5,6,7,8,9,10
 ```
 
 #### 3. Basic eval error example

@@ -316,6 +316,60 @@ public class Parser implements ParserInterface {
 
             return new ENEq(eInt, exp2);
 
+        }else if (first.is(TokenType.FLOAT) && second.is(TokenType.GREATER)) {
+
+            nextToken();
+            EDouble eDouble = new EDouble(Double.parseDouble(lookahead.getData()));
+            nextToken();
+            Exp exp2 = parseExp();
+
+            return new EGt(eDouble, exp2);
+
+        } else if (first.is(TokenType.FLOAT) && second.is(TokenType.GREATEROREQUALS)) {
+
+            nextToken();
+            EDouble eDouble = new EDouble(Double.parseDouble(lookahead.getData()));
+            nextToken();
+            Exp exp2 = parseExp();
+
+            return new EGtEq(eDouble, exp2);
+
+        } else if (first.is(TokenType.FLOAT) && second.is(TokenType.LESS)) {
+
+            nextToken();
+            EDouble eDouble = new EDouble(Double.parseDouble(lookahead.getData()));
+            nextToken();
+            Exp exp2 = parseExp();
+
+            return new ELt(eDouble, exp2);
+
+        } else if (first.is(TokenType.FLOAT) && second.is(TokenType.LESSOREQUALS)) {
+
+            nextToken();
+            EDouble eDouble = new EDouble(Double.parseDouble(lookahead.getData()));
+            nextToken();
+            Exp exp2 = parseExp();
+
+            return new ELtEq(eDouble, exp2);
+
+        } else if (first.is(TokenType.FLOAT) && second.is(TokenType.EQUALS)) {
+
+            nextToken();
+            EDouble eDouble = new EDouble(Double.parseDouble(lookahead.getData()));
+            nextToken();
+            Exp exp2 = parseExp();
+
+            return new EEq(eDouble, exp2);
+
+        } else if (first.is(TokenType.FLOAT) && second.is(TokenType.NOTEQUAL)) {
+
+            nextToken();
+            EDouble eDouble = new EDouble(Double.parseDouble(lookahead.getData()));
+            nextToken();
+            Exp exp2 = parseExp();
+
+            return new ENEq(eDouble, exp2);
+
         }else if (first.is(TokenType.STRING) && second.is(TokenType.EQUALS)) {
 
             nextToken();
