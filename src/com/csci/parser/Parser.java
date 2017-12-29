@@ -480,10 +480,52 @@ public class Parser implements ParserInterface {
             Exp exp = parseExp();
             return new EPlus(eString, exp);
 
+        } else if (first.is(TokenType.TRUE) && second.is(TokenType.AND)) {
+
+            nextToken();
+            ETrue eTrue = new ETrue();
+            nextToken();
+            Exp exp = parseExp();
+            return new EAnd(eTrue, exp);
+
+        } else if (first.is(TokenType.TRUE) && second.is(TokenType.OR)) {
+
+            nextToken();
+            ETrue eTrue = new ETrue();
+            nextToken();
+            Exp exp = parseExp();
+            return new EOr(eTrue, exp);
+
+        }else if (first.is(TokenType.FALSE) && second.is(TokenType.AND)) {
+
+            nextToken();
+            EFalse eFalse = new EFalse();
+            nextToken();
+            Exp exp = parseExp();
+            return new EAnd(eFalse, exp);
+
+        } else if (first.is(TokenType.FALSE) && second.is(TokenType.OR)) {
+
+            nextToken();
+            EFalse eFalse = new EFalse();
+            nextToken();
+            Exp exp = parseExp();
+            return new EOr(eFalse, exp);
+
         } else if (first.is(TokenType.IDENT)) {
 
             nextToken();
             return new EId(lookahead.getData());
+
+        } else if (first.is(TokenType.TRUE)) {
+
+            nextToken();
+            return new ETrue();
+
+        } else if (first.is(TokenType.FALSE)) {
+
+            nextToken();
+            return new EFalse();
 
         } else if (first.is(TokenType.STRING)) {
 

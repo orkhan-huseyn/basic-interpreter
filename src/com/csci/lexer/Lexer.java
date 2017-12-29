@@ -4,7 +4,8 @@ import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Lexer {
+public class
+Lexer {
 
     public LinkedList<Token> lex(String input) {
 
@@ -51,9 +52,15 @@ public class Lexer {
 
                 continue;
 
-            } else if (matcher.group(TokenType.BOOLEAN.name()) != null) {
+            } else if (matcher.group(TokenType.TRUE.name()) != null) {
 
-                tokens.add(new Token(TokenType.BOOLEAN, matcher.group(TokenType.BOOLEAN.name()), matcher.start()));
+                tokens.add(new Token(TokenType.TRUE, matcher.group(TokenType.TRUE.name()), matcher.start()));
+
+                continue;
+
+            } else if (matcher.group(TokenType.FALSE.name()) != null) {
+
+                tokens.add(new Token(TokenType.FALSE, matcher.group(TokenType.FALSE.name()), matcher.start()));
 
                 continue;
 

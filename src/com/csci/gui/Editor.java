@@ -194,7 +194,8 @@ public class Editor {
                 tokenColors.put(TokenType.INT.name(), Color.RED);
                 tokenColors.put(TokenType.STRING.name(), Color.GRAY);
                 tokenColors.put(TokenType.CHAR.name(), Color.GRAY);
-                tokenColors.put(TokenType.BOOLEAN.name(), Color.MAGENTA);
+                tokenColors.put(TokenType.TRUE.name(), Color.MAGENTA);
+                tokenColors.put(TokenType.FALSE.name(), Color.MAGENTA);
                 tokenColors.put(TokenType.RETURN.name(), Color.BLUE);
                 tokenColors.put(TokenType.IF.name(), Color.BLUE);
                 tokenColors.put(TokenType.ELSE.name(), Color.BLUE);

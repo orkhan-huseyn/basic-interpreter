@@ -16,7 +16,7 @@ public enum TokenType {
     INT("-?[0-9]+"),
     STRING("\"(.*?)\""),
     CHAR("'(.*?)'"),
-    BOOLEAN("true|false"),
+    //BOOLEAN("true|false"),
     INCREMENT("\\+\\+"),
     DECREMENT("--"),
     PLUS("\\+"),

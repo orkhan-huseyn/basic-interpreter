@@ -140,7 +140,7 @@ public class Evaluator implements EvalVisitor {
         if (!(condition.type instanceof TypeBool))
             throw new Exception("Type error: condition is not boolean");
 
-        if ((Boolean) condition.value) {
+        if (Boolean.parseBoolean(condition.value.toString())) {
             for (Stm stm : sIfElse.stm_1) {
                 res = stm.eval(this);
             }
@@ -163,7 +163,7 @@ public class Evaluator implements EvalVisitor {
         if (!(condition.type instanceof TypeBool))
             throw new Exception("Type error: condition is not boolean");
 
-        if ((Boolean) condition.value) {
+        if (Boolean.parseBoolean(condition.value.toString())) {
             for (Stm stm : sWhile.stm_) {
                 res = stm.eval(this);
             }
@@ -193,7 +193,7 @@ public class Evaluator implements EvalVisitor {
 
         if (value.type instanceof TypeInt) {
 
-            value.value = (Integer) value.value + 1;
+            value.value = Integer.parseInt(value.value.toString()) + 1;
             if (eIncr.exp_ instanceof EId) {
                 GLOBAL_SCOPE.put(((EId) eIncr.exp_).id_, value);
                 return null;
@@ -215,7 +215,7 @@ public class Evaluator implements EvalVisitor {
         CustomObject value = eDecr.exp_.eval(this);
         if (value.type instanceof TypeInt) {
 
-            value.value = (Integer) value.value - 1;
+            value.value = Integer.parseInt(value.value.toString()) - 1;
             if (eDecr.exp_ instanceof EId) {
                 GLOBAL_SCOPE.put(((EId) eDecr.exp_).id_, value);
                 return null;
@@ -268,11 +268,11 @@ public class Evaluator implements EvalVisitor {
 
         if (exp1.type instanceof TypeString && exp2.type instanceof TypeString) {
 
-            res = exp1.value.equals(exp2.value);
+            res = exp1.value.toString().equals(exp2.value.toString());
 
         } else {
 
-            res = exp1.value == exp2.value;
+            res = Double.parseDouble(exp1.value.toString()) == Double.parseDouble(exp2.value.toString());
 
         }
 
@@ -298,7 +298,7 @@ public class Evaluator implements EvalVisitor {
 
         if ((exp1.type instanceof TypeBool || exp1.type instanceof TypeInt) && (exp2.type instanceof TypeBool || exp2.type instanceof TypeInt)) {
 
-            Boolean isGreater = (Double)eGt.exp_1.eval(this).value > (Double)eGt.exp_2.eval(this).value;
+            Boolean isGreater = Double.parseDouble(exp1.value.toString()) > Double.parseDouble(exp2.value.toString());
 
             res = new CustomObject(new TypeBool(), isGreater);
 
@@ -322,7 +322,7 @@ public class Evaluator implements EvalVisitor {
 
         if ((exp1.type instanceof TypeBool || exp1.type instanceof TypeInt) && (exp2.type instanceof TypeBool || exp2.type instanceof TypeInt)) {
 
-            Boolean isGreater = (Double)eGtEq.exp_1.eval(this).value >= (Double)eGtEq.exp_2.eval(this).value;
+            Boolean isGreater = Double.parseDouble(exp1.value.toString()) >= Double.parseDouble(exp2.value.toString());
 
             res = new CustomObject(new TypeBool(), isGreater);
 
@@ -347,7 +347,7 @@ public class Evaluator implements EvalVisitor {
 
         if ((exp1.type instanceof TypeBool || exp1.type instanceof TypeInt) && (exp2.type instanceof TypeBool || exp2.type instanceof TypeInt)) {
 
-            Boolean isGreater = (Double)eLt.exp_1.eval(this).value < (Double)eLt.exp_2.eval(this).value;
+            Boolean isGreater = Double.parseDouble(exp1.value.toString()) < Double.parseDouble(exp2.value.toString());
 
             res = new CustomObject(new TypeBool(), isGreater);
 
@@ -371,7 +371,7 @@ public class Evaluator implements EvalVisitor {
 
         if ((exp1.type instanceof TypeBool || exp1.type instanceof TypeInt) && (exp2.type instanceof TypeBool || exp2.type instanceof TypeInt)) {
 
-            Boolean isGreater = (Double)eLtEq.exp_1.eval(this).value <= (Double)eLtEq.exp_2.eval(this).value;
+            Boolean isGreater = Double.parseDouble(exp1.value.toString()) <= Double.parseDouble(exp2.value.toString());
 
             res = new CustomObject(new TypeBool(), isGreater);
 
@@ -386,12 +386,48 @@ public class Evaluator implements EvalVisitor {
 
     @Override
     public CustomObject visit(EAnd eAnd) throws Exception {
-        return null;
+
+        CustomObject exp1 = eAnd.exp_1.eval(this);
+        CustomObject exp2 = eAnd.exp_2.eval(this);
+
+        CustomObject res = null;
+
+        if (exp1.type instanceof TypeBool && exp2.type instanceof TypeBool) {
+
+            Boolean resAnd = Boolean.parseBoolean(exp1.value.toString()) && Boolean.parseBoolean(exp2.value.toString());
+
+            res = new CustomObject(new TypeBool(), resAnd);
+
+        } else {
+
+            throw new Exception("Type error: boolean operations can be performed on booleans");
+
+        }
+
+        return res;
     }
 
     @Override
     public CustomObject visit(EOr eOr) throws Exception {
-        return null;
+
+        CustomObject exp1 = eOr.exp_1.eval(this);
+        CustomObject exp2 = eOr.exp_2.eval(this);
+
+        CustomObject res = null;
+
+        if (exp1.type instanceof TypeBool && exp2.type instanceof TypeBool) {
+
+            Boolean resAnd = Boolean.parseBoolean(exp1.value.toString()) || Boolean.parseBoolean(exp2.value.toString());
+
+            res = new CustomObject(new TypeBool(), resAnd);
+
+        } else {
+
+            throw new Exception("Type error: boolean operations can be performed on booleans");
+
+        }
+
+        return res;
     }
 
     @Override
@@ -414,13 +450,13 @@ public class Evaluator implements EvalVisitor {
 
         if (exp1.type instanceof TypeInt && exp2.type instanceof TypeInt) {
 
-            Integer prod = (Integer)exp1.value + (Integer)exp2.value;
+            Integer prod = Integer.parseInt(exp1.value.toString()) + Integer.parseInt(exp2.value.toString());
 
             res = new CustomObject(new TypeInt(), prod);
 
         } else if ((exp1.type instanceof TypeBool || exp1.type instanceof TypeInt) && (exp2.type instanceof TypeBool || exp2.type instanceof TypeInt)) {
 
-            Double prod = (Double)exp1.value + (Double)exp2.value;
+            Double prod = Double.parseDouble(exp1.value.toString()) + Double.parseDouble(exp2.value.toString());
 
             res = new CustomObject(new TypeDouble(), prod);
 
@@ -449,13 +485,13 @@ public class Evaluator implements EvalVisitor {
 
         if (exp1.type instanceof TypeInt && exp2.type instanceof TypeInt) {
 
-            Integer prod = (Integer)exp1.value - (Integer)exp2.value;
+            Integer prod = Integer.parseInt(exp1.value.toString()) - Integer.parseInt(exp2.value.toString());
 
             res = new CustomObject(new TypeInt(), prod);
 
         } else if ((exp1.type instanceof TypeBool || exp1.type instanceof TypeInt) && (exp2.type instanceof TypeBool || exp2.type instanceof TypeInt)) {
 
-            Double prod = (Double)exp1.value - (Double)exp2.value;
+            Double prod = Double.parseDouble(exp1.value.toString()) - Double.parseDouble(exp2.value.toString());
 
             res = new CustomObject(new TypeDouble(), prod);
 
@@ -478,13 +514,13 @@ public class Evaluator implements EvalVisitor {
 
         if (exp1.type instanceof TypeInt && exp2.type instanceof TypeInt) {
 
-            Integer prod = (Integer)exp1.value / (Integer)exp2.value;
+            Integer prod = Integer.parseInt(exp1.value.toString()) / Integer.parseInt(exp2.value.toString());
 
             res = new CustomObject(new TypeInt(), prod);
 
         } else if ((exp1.type instanceof TypeBool || exp1.type instanceof TypeInt) && (exp2.type instanceof TypeBool || exp2.type instanceof TypeInt)) {
 
-            Double prod = (Double)exp1.value / (Double)exp2.value;
+            Double prod = Double.parseDouble(exp1.value.toString()) / Double.parseDouble(exp2.value.toString());
 
             res = new CustomObject(new TypeDouble(), prod);
 
@@ -507,13 +543,13 @@ public class Evaluator implements EvalVisitor {
 
         if (exp1.type instanceof TypeInt && exp2.type instanceof TypeInt) {
 
-            Integer prod = (Integer)exp1.value * (Integer)exp2.value;
+            Integer prod = Integer.parseInt(exp1.value.toString()) * Integer.parseInt(exp2.value.toString());
 
             res = new CustomObject(new TypeInt(), prod);
 
         } else if ((exp1.type instanceof TypeBool || exp1.type instanceof TypeInt) && (exp2.type instanceof TypeBool || exp2.type instanceof TypeInt)) {
 
-            Double prod = (Double)exp1.value * (Double)exp2.value;
+            Double prod = Double.parseDouble(exp1.value.toString()) * Double.parseDouble(exp2.value.toString());
 
             res = new CustomObject(new TypeBool(), prod);
 
