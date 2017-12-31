@@ -91,3 +91,25 @@ int main() {
 
 //Output: true
 ```
+
+#### 6. Mixed test case:
+
+```
+int main() {
+   int y = 1;
+   bool isOk = true;
+   string res = "";
+   while (isOk) {
+      y = y * 2;
+      if (y > 100) {
+         isOk = false;
+         res = "Y is: " + y;
+      } 
+      else {
+         isOk = true;
+      }
+   }
+   return res;
+}
+//Output: Y is: 128
+```
