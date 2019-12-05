@@ -4,8 +4,7 @@ import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class
-Lexer {
+public class Lexer {
 
     public LinkedList<Token> lex(String input) {
 

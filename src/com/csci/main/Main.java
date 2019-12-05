@@ -5,9 +5,7 @@ import com.csci.gui.Editor;
 import java.awt.EventQueue;
 
 public class Main {
-
     public static void main(String[] args) {
-
         EventQueue.invokeLater(() -> {
             try {
                 Editor window = new Editor();
@@ -16,7 +14,5 @@ public class Main {
                 e.printStackTrace();
             }
         });
-
     }
-
 }

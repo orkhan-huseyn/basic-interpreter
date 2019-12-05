@@ -47,7 +47,7 @@ int main() {
 
 #### 3. Basic eval error example
 
-```
+```c
 int main() {
   int x;
   int y;
@@ -60,7 +60,7 @@ int main() {
 
 #### 4. Basic parse error example
 
-```
+```c
 int main() {
   int x;
   int y
@@ -72,7 +72,7 @@ int main() {
 ```
 
 #### 4. Basic type error example
-```
+```c
 int main() {
   int x = "myString";
   return x;
@@ -82,7 +82,7 @@ int main() {
 ```
 
 #### 5. Basic boolean operations example
-```
+```c
 int main() {
   int z = 12;
   bool x = true && x > 12;
@@ -94,7 +94,7 @@ int main() {
 
 #### 6. Mixed test case:
 
-```
+```c
 int main() {
    int y = 1;
    bool isOk = true;
