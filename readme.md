@@ -13,7 +13,7 @@ Steps implemented:
 Test codes that interpreter is able to process:
 
 #### 1. Basic if else evaluation
-```
+```c
 int main() {
   string name = "Orkhan"; string res;
   int privilege = 1;
@@ -31,7 +31,7 @@ int main() {
 
 #### 2. Basic while loop evalution
 
-```
+```c
 int main() {
   int count = 0;
   string res = "Iteration: ";
